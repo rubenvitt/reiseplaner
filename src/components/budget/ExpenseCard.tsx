@@ -11,7 +11,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { formatDate, formatCurrency } from '@/lib/utils'
+import { formatDateOrPlaceholder, formatCurrency } from '@/lib/utils'
 import type { Expense, ExpenseCategory, PaymentMethod } from '@/types'
 
 export interface ExpenseCardProps {
@@ -111,7 +111,7 @@ export function ExpenseCard({ expense, currency, onEdit, onDelete }: ExpenseCard
         {/* Datum */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Calendar className="h-4 w-4" />
-          <span>{formatDate(expense.date)}</span>
+          <span>{formatDateOrPlaceholder(expense.date)}</span>
         </div>
 
         {/* Zahlungsmethode */}

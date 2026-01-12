@@ -55,9 +55,13 @@ export const useAccommodationStore = create<AccommodationState>()(
       getAccommodationsByTrip: (tripId) => {
         return get()
           .accommodations.filter((accommodation) => accommodation.tripId === tripId)
-          .sort(
-            (a, b) => new Date(a.checkIn).getTime() - new Date(b.checkIn).getTime()
-          )
+          .sort((a, b) => {
+            // Items ohne Datum ans Ende
+            if (!a.checkIn && !b.checkIn) return 0
+            if (!a.checkIn) return 1
+            if (!b.checkIn) return -1
+            return new Date(a.checkIn).getTime() - new Date(b.checkIn).getTime()
+          })
       },
 
       getAccommodationsByDestination: (destinationId) => {
@@ -65,9 +69,13 @@ export const useAccommodationStore = create<AccommodationState>()(
           .accommodations.filter(
             (accommodation) => accommodation.destinationId === destinationId
           )
-          .sort(
-            (a, b) => new Date(a.checkIn).getTime() - new Date(b.checkIn).getTime()
-          )
+          .sort((a, b) => {
+            // Items ohne Datum ans Ende
+            if (!a.checkIn && !b.checkIn) return 0
+            if (!a.checkIn) return 1
+            if (!b.checkIn) return -1
+            return new Date(a.checkIn).getTime() - new Date(b.checkIn).getTime()
+          })
       },
 
       togglePaidStatus: (id) => {

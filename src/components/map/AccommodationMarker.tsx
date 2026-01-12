@@ -1,6 +1,6 @@
 import { Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
-import { formatDate } from '@/lib/utils'
+import { formatDateOrPlaceholder } from '@/lib/utils'
 import type { Accommodation, AccommodationType } from '@/types'
 
 // Accommodation type labels
@@ -89,10 +89,10 @@ export function AccommodationMarker({
           <p className="text-xs text-muted-foreground mt-1">{address}</p>
           <div className="mt-2 text-xs text-muted-foreground space-y-1">
             <p>
-              <span className="font-medium">Check-in:</span> {formatDate(checkIn)}
+              <span className="font-medium">Check-in:</span> {formatDateOrPlaceholder(checkIn)}
             </p>
             <p>
-              <span className="font-medium">Check-out:</span> {formatDate(checkOut)}
+              <span className="font-medium">Check-out:</span> {formatDateOrPlaceholder(checkOut)}
             </p>
           </div>
           {confirmationNumber && (

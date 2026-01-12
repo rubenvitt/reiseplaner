@@ -19,7 +19,7 @@ import {
   Badge,
   Button,
 } from '@/components/ui'
-import { formatDate, formatCurrency } from '@/lib/utils'
+import { formatDateRangeOrPlaceholder, formatCurrency } from '@/lib/utils'
 import type { Accommodation, AccommodationType } from '@/types'
 
 interface AccommodationCardProps {
@@ -103,7 +103,7 @@ export function AccommodationCard({
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Calendar className="h-4 w-4" />
           <span>
-            {formatDate(checkIn)} - {formatDate(checkOut)}
+            {formatDateRangeOrPlaceholder(checkIn, checkOut)}
           </span>
         </div>
 

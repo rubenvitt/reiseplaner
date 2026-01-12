@@ -5,8 +5,8 @@ export interface Accommodation {
   name: string
   type: AccommodationType
   address: string
-  checkIn: string
-  checkOut: string
+  checkIn?: string
+  checkOut?: string
   confirmationNumber?: string
   price: number
   currency: string

@@ -1,6 +1,6 @@
 import { Marker, Popup } from 'react-leaflet'
 import L from 'leaflet'
-import { formatDate } from '@/lib/utils'
+import { formatDateOrPlaceholder } from '@/lib/utils'
 import type { Destination } from '@/types'
 
 // Custom blue destination marker icon
@@ -95,10 +95,10 @@ export function DestinationMarker({
           <p className="text-sm text-muted-foreground mb-2">{country}</p>
           <div className="text-xs text-muted-foreground space-y-1">
             <p>
-              <span className="font-medium">Ankunft:</span> {formatDate(arrivalDate)}
+              <span className="font-medium">Ankunft:</span> {formatDateOrPlaceholder(arrivalDate)}
             </p>
             <p>
-              <span className="font-medium">Abreise:</span> {formatDate(departureDate)}
+              <span className="font-medium">Abreise:</span> {formatDateOrPlaceholder(departureDate)}
             </p>
           </div>
           {destination.notes && (

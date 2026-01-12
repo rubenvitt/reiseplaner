@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useTripStore } from '@/stores';
 import { DayPlanner } from '@/components/itinerary';
 import { CalendarView } from '@/components/calendar';
-import { ChevronLeft, Calendar, List, LayoutGrid } from 'lucide-react';
+import { ChevronLeft, Calendar, List, LayoutGrid, CalendarX } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { cn } from '@/lib/utils';
 
@@ -98,7 +98,23 @@ export function ItineraryPage() {
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6">
-          {viewMode === 'list' ? (
+          {!trip.startDate || !trip.endDate ? (
+            <div className="flex flex-col items-center justify-center py-16 px-4">
+              <CalendarX className="w-16 h-16 text-muted-foreground/50 mb-4" />
+              <h2 className="text-xl font-semibold text-foreground mb-2">
+                Kein Zeitraum festgelegt
+              </h2>
+              <p className="text-muted-foreground text-center mb-6 max-w-md">
+                Um die Tagesplanung nutzen zu können, legen Sie bitte zuerst Start- und Enddatum der Reise fest.
+              </p>
+              <Link
+                to={`/trip/${tripId}`}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                Reise bearbeiten
+              </Link>
+            </div>
+          ) : viewMode === 'list' ? (
             <DayPlanner
               tripId={tripId}
               startDate={trip.startDate}

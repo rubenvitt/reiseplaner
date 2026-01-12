@@ -32,7 +32,7 @@ export interface ExpenseFormData {
   amount: number
   currency: string
   category: ExpenseCategory
-  date: string
+  date?: string
   paymentMethod?: PaymentMethod
   notes?: string
   isReimbursable: boolean
@@ -165,17 +165,13 @@ export function ExpenseForm({
       {/* Datum */}
       <div className="space-y-2">
         <label htmlFor="date" className="text-sm font-medium">
-          Datum <span className="text-destructive">*</span>
+          Datum
         </label>
         <Input
           id="date"
           type="date"
-          {...register('date', { required: 'Datum ist erforderlich' })}
-          className={cn(errors.date && 'border-destructive')}
+          {...register('date')}
         />
-        {errors.date && (
-          <p className="text-sm text-destructive">{errors.date.message}</p>
-        )}
       </div>
 
       {/* Zahlungsmethode */}

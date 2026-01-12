@@ -62,7 +62,13 @@ export const useItineraryStore = create<ItineraryState>()(
       getDayPlansByTrip: (tripId) => {
         return get()
           .dayPlans.filter((dayPlan) => dayPlan.tripId === tripId)
-          .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+          .sort((a, b) => {
+            // Items ohne Datum ans Ende
+            if (!a.date && !b.date) return 0
+            if (!a.date) return 1
+            if (!b.date) return -1
+            return new Date(a.date).getTime() - new Date(b.date).getTime()
+          })
       },
 
       getDayPlanByDate: (tripId, date) => {

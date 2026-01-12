@@ -17,11 +17,16 @@ import type { Activity, Destination } from '@/types'
 
 interface DayPlannerProps {
   tripId: string
-  startDate: string
-  endDate: string
+  startDate?: string
+  endDate?: string
 }
 
 export function DayPlanner({ tripId, startDate, endDate }: DayPlannerProps) {
+  // Guard-Clause: Wenn keine Daten vorhanden, nichts anzeigen
+  if (!startDate || !endDate) {
+    return null
+  }
+
   const {
     getDayPlansByTrip,
     getDayPlanByDate,
@@ -36,6 +41,7 @@ export function DayPlanner({ tripId, startDate, endDate }: DayPlannerProps) {
   // Helper: Findet das Reiseziel für ein bestimmtes Datum
   const getDestinationForDate = (date: string): Destination | undefined => {
     return destinations.find((dest) => {
+      if (!dest.arrivalDate || !dest.departureDate) return false
       return dest.arrivalDate <= date && date <= dest.departureDate
     })
   }

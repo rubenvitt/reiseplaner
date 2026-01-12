@@ -2,8 +2,8 @@ export interface Trip {
   id: string
   name: string
   description?: string
-  startDate: string
-  endDate: string
+  startDate?: string
+  endDate?: string
   coverImage?: string
   destinations: Destination[]
   status: TripStatus
@@ -18,8 +18,8 @@ export interface Destination {
   tripId: string
   name: string
   country: string
-  arrivalDate: string
-  departureDate: string
+  arrivalDate?: string
+  departureDate?: string
   order: number
   notes?: string
   latitude?: number

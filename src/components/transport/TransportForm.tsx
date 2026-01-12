@@ -41,9 +41,9 @@ export interface TransportFormData {
   originDestinationId?: string
   destinationName: string
   destinationDestinationId?: string
-  departureDate: string
+  departureDate?: string
   departureTime?: string
-  arrivalDate: string
+  arrivalDate?: string
   arrivalTime?: string
   bookingReference?: string
   price?: number
@@ -216,17 +216,13 @@ export function TransportForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="departureDate" className="text-sm font-medium">
-            Abfahrtsdatum <span className="text-destructive">*</span>
+            Abfahrtsdatum
           </label>
           <Input
             id="departureDate"
             type="date"
-            {...register('departureDate', { required: 'Abfahrtsdatum ist erforderlich' })}
-            className={cn(errors.departureDate && 'border-destructive')}
+            {...register('departureDate')}
           />
-          {errors.departureDate && (
-            <p className="text-sm text-destructive">{errors.departureDate.message}</p>
-          )}
         </div>
 
         <div className="space-y-2">
@@ -245,15 +241,14 @@ export function TransportForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="arrivalDate" className="text-sm font-medium">
-            Ankunftsdatum <span className="text-destructive">*</span>
+            Ankunftsdatum
           </label>
           <Input
             id="arrivalDate"
             type="date"
             {...register('arrivalDate', {
-              required: 'Ankunftsdatum ist erforderlich',
               validate: (value) => {
-                if (departureDate && value < departureDate) {
+                if (departureDate && value && value < departureDate) {
                   return 'Ankunft muss nach Abfahrt liegen'
                 }
                 return true

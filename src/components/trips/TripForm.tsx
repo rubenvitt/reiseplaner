@@ -12,8 +12,8 @@ const CURRENCIES = [
 export interface TripFormData {
   name: string
   description?: string
-  startDate: string
-  endDate: string
+  startDate?: string
+  endDate?: string
   currency: string
   totalBudget: number
 }
@@ -82,34 +82,25 @@ export function TripForm({ trip, onSubmit, onCancel }: TripFormProps) {
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="startDate" className="text-sm font-medium">
-            Startdatum <span className="text-destructive">*</span>
+            Startdatum
           </label>
           <Input
             id="startDate"
             type="date"
-            {...register('startDate', {
-              required: 'Startdatum ist erforderlich',
-            })}
-            aria-invalid={errors.startDate ? 'true' : 'false'}
+            {...register('startDate')}
           />
-          {errors.startDate && (
-            <p className="text-sm text-destructive">
-              {errors.startDate.message}
-            </p>
-          )}
         </div>
 
         <div className="space-y-2">
           <label htmlFor="endDate" className="text-sm font-medium">
-            Enddatum <span className="text-destructive">*</span>
+            Enddatum
           </label>
           <Input
             id="endDate"
             type="date"
             {...register('endDate', {
-              required: 'Enddatum ist erforderlich',
               validate: (value) => {
-                if (startDate && value < startDate) {
+                if (startDate && value && value < startDate) {
                   return 'Enddatum muss nach dem Startdatum liegen'
                 }
                 return true

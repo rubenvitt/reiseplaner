@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { formatDateRangeOrPlaceholder } from '@/lib/utils'
 import type { Destination } from '@/types'
 
 export function TripOverview() {
@@ -27,14 +28,6 @@ export function TripOverview() {
 
   if (!trip) {
     return null
-  }
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('de-DE', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    })
   }
 
   // Handlers
@@ -86,7 +79,7 @@ export function TripOverview() {
           <div>
             <p className="text-sm text-muted-foreground">Reisezeitraum</p>
             <p className="text-foreground">
-              {formatDate(trip.startDate)} - {formatDate(trip.endDate)}
+              {formatDateRangeOrPlaceholder(trip.startDate, trip.endDate)}
             </p>
           </div>
 

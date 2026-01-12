@@ -40,9 +40,9 @@ export interface Transport {
   origin: TransportLocation
   destination: TransportLocation
 
-  departureDate: string
+  departureDate?: string
   departureTime?: string
-  arrivalDate: string
+  arrivalDate?: string
   arrivalTime?: string
 
   bookingReference?: string

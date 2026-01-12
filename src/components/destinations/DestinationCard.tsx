@@ -8,7 +8,7 @@ import {
   Button,
   Badge,
 } from '@/components/ui'
-import { formatDate } from '@/lib/utils'
+import { formatDateRangeOrPlaceholder } from '@/lib/utils'
 import { useAccommodationStore } from '@/stores/accommodationStore'
 import { useItineraryStore } from '@/stores/itineraryStore'
 import type { Destination } from '@/types'
@@ -65,7 +65,7 @@ export function DestinationCard({
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Calendar className="h-4 w-4" />
           <span>
-            {formatDate(arrivalDate)} - {formatDate(departureDate)}
+            {formatDateRangeOrPlaceholder(arrivalDate, departureDate)}
           </span>
         </div>
 

@@ -11,8 +11,8 @@ import { cn } from '@/lib/utils'
 export interface DestinationFormData {
   name: string
   country: string
-  arrivalDate: string
-  departureDate: string
+  arrivalDate?: string
+  departureDate?: string
   notes?: string
   latitude?: number
   longitude?: number
@@ -123,30 +123,25 @@ export function DestinationForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="arrivalDate" className="text-sm font-medium">
-            Ankunft <span className="text-destructive">*</span>
+            Ankunft
           </label>
           <Input
             id="arrivalDate"
             type="date"
-            {...register('arrivalDate', { required: 'Ankunftsdatum ist erforderlich' })}
-            className={cn(errors.arrivalDate && 'border-destructive')}
+            {...register('arrivalDate')}
           />
-          {errors.arrivalDate && (
-            <p className="text-sm text-destructive">{errors.arrivalDate.message}</p>
-          )}
         </div>
 
         <div className="space-y-2">
           <label htmlFor="departureDate" className="text-sm font-medium">
-            Abreise <span className="text-destructive">*</span>
+            Abreise
           </label>
           <Input
             id="departureDate"
             type="date"
             {...register('departureDate', {
-              required: 'Abreisedatum ist erforderlich',
               validate: (value) => {
-                if (arrivalDate && value < arrivalDate) {
+                if (arrivalDate && value && value < arrivalDate) {
                   return 'Abreise muss nach der Ankunft liegen'
                 }
                 return true

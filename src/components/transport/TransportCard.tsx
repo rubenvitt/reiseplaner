@@ -26,7 +26,7 @@ import {
   Badge,
   Button,
 } from '@/components/ui'
-import { formatDate, formatCurrency } from '@/lib/utils'
+import { formatDateOrPlaceholder, formatCurrency } from '@/lib/utils'
 import type { Transport, TransportMode } from '@/types'
 
 interface TransportCardProps {
@@ -61,12 +61,12 @@ const TRANSPORT_LABELS: Record<TransportMode, string> = {
 }
 
 function calculateDuration(
-  departureDate: string,
+  departureDate: string | undefined,
   departureTime: string | undefined,
-  arrivalDate: string,
+  arrivalDate: string | undefined,
   arrivalTime: string | undefined
 ): string | null {
-  if (!departureTime || !arrivalTime) return null
+  if (!departureDate || !arrivalDate || !departureTime || !arrivalTime) return null
 
   const departure = new Date(`${departureDate}T${departureTime}`)
   const arrival = new Date(`${arrivalDate}T${arrivalTime}`)
@@ -158,7 +158,7 @@ export function TransportCard({
             <div className="pl-6">
               <div className="flex items-center gap-2">
                 <Calendar className="h-3 w-3 text-muted-foreground" />
-                <span>{formatDate(departureDate)}</span>
+                <span>{formatDateOrPlaceholder(departureDate)}</span>
               </div>
               {departureTime && (
                 <div className="flex items-center gap-2">
@@ -176,7 +176,7 @@ export function TransportCard({
             <div className="pl-6">
               <div className="flex items-center gap-2">
                 <Calendar className="h-3 w-3 text-muted-foreground" />
-                <span>{formatDate(arrivalDate)}</span>
+                <span>{formatDateOrPlaceholder(arrivalDate)}</span>
               </div>
               {arrivalTime && (
                 <div className="flex items-center gap-2">

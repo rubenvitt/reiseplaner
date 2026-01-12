@@ -60,7 +60,13 @@ export const useBudgetStore = create<BudgetState>()(
       getExpensesByTrip: (tripId) => {
         return get()
           .expenses.filter((expense) => expense.tripId === tripId)
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          .sort((a, b) => {
+            // Items ohne Datum ans Ende
+            if (!a.date && !b.date) return 0
+            if (!a.date) return 1
+            if (!b.date) return -1
+            return new Date(b.date).getTime() - new Date(a.date).getTime()
+          })
       },
 
       getExpensesByCategory: (tripId, category) => {
@@ -68,7 +74,13 @@ export const useBudgetStore = create<BudgetState>()(
           .expenses.filter(
             (expense) => expense.tripId === tripId && expense.category === category
           )
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          .sort((a, b) => {
+            // Items ohne Datum ans Ende
+            if (!a.date && !b.date) return 0
+            if (!a.date) return 1
+            if (!b.date) return -1
+            return new Date(b.date).getTime() - new Date(a.date).getTime()
+          })
       },
 
       getExpensesByDate: (tripId, date) => {
@@ -98,7 +110,13 @@ export const useBudgetStore = create<BudgetState>()(
           .expenses.filter(
             (expense) => expense.tripId === tripId && expense.isReimbursable
           )
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          .sort((a, b) => {
+            // Items ohne Datum ans Ende
+            if (!a.date && !b.date) return 0
+            if (!a.date) return 1
+            if (!b.date) return -1
+            return new Date(b.date).getTime() - new Date(a.date).getTime()
+          })
       },
     }),
     {

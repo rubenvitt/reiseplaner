@@ -20,7 +20,7 @@ export interface Expense {
   amount: number
   currency: string
   category: ExpenseCategory
-  date: string
+  date?: string
   paymentMethod?: PaymentMethod
   notes?: string
   isReimbursable: boolean

@@ -1,7 +1,7 @@
 export interface DayPlan {
   id: string
   tripId: string
-  date: string
+  date?: string
   destinationId?: string
   activities: Activity[]
   notes?: string

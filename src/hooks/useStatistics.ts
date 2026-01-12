@@ -73,7 +73,10 @@ export function useStatistics(): Statistics {
       upcomingTrips: trips.filter((t) => t.status === 'upcoming').length,
       ongoingTrips: trips.filter((t) => t.status === 'ongoing').length,
       planningTrips: trips.filter((t) => t.status === 'planning').length,
-      totalDays: trips.reduce((acc, t) => acc + daysBetween(t.startDate, t.endDate), 0),
+      totalDays: trips.reduce((acc, t) => {
+        if (!t.startDate || !t.endDate) return acc
+        return acc + daysBetween(t.startDate, t.endDate)
+      }, 0),
       uniqueCountries: [...new Set(trips.flatMap((t) => t.destinations.map((d) => d.country)))],
       uniqueDestinations: [...new Set(trips.flatMap((t) => t.destinations.map((d) => d.name)))],
     }
@@ -124,7 +127,10 @@ export function useStatistics(): Statistics {
 
     // Accommodation Statistics
     const totalAccommodationSpent = accommodations.reduce((acc, a) => acc + a.price, 0)
-    const totalNights = accommodations.reduce((acc, a) => acc + daysBetween(a.checkIn, a.checkOut), 0)
+    const totalNights = accommodations.reduce((acc, a) => {
+      if (!a.checkIn || !a.checkOut) return acc
+      return acc + daysBetween(a.checkIn, a.checkOut)
+    }, 0)
     const byType = accommodations.reduce(
       (acc, a) => {
         acc[a.type] = (acc[a.type] || 0) + 1

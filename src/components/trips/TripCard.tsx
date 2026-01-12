@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ScaleIn } from '@/components/ui/motion'
-import { formatDate, formatCurrency } from '@/lib/utils'
+import { formatDateRangeOrPlaceholder, formatCurrency } from '@/lib/utils'
 import type { Trip, TripStatus } from '@/types'
 
 interface TripCardProps {
@@ -60,7 +60,7 @@ export function TripCard({ trip, onEdit, onDelete, 'data-tour': dataTour }: Trip
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Calendar className="h-4 w-4" />
             <span>
-              {formatDate(trip.startDate)} - {formatDate(trip.endDate)}
+              {formatDateRangeOrPlaceholder(trip.startDate, trip.endDate)}
             </span>
           </div>
 

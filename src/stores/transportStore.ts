@@ -55,6 +55,10 @@ export const useTransportStore = create<TransportState>()(
         return get()
           .transports.filter((transport) => transport.tripId === tripId)
           .sort((a, b) => {
+            // Items ohne Datum ans Ende
+            if (!a.departureDate && !b.departureDate) return 0
+            if (!a.departureDate) return 1
+            if (!b.departureDate) return -1
             const dateA = new Date(`${a.departureDate}T${a.departureTime || '00:00'}`)
             const dateB = new Date(`${b.departureDate}T${b.departureTime || '00:00'}`)
             return dateA.getTime() - dateB.getTime()

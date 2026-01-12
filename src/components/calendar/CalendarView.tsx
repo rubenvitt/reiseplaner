@@ -19,8 +19,8 @@ import type { Activity } from '@/types'
 
 interface CalendarViewProps {
   tripId: string
-  startDate: string
-  endDate: string
+  startDate?: string
+  endDate?: string
   onActivityClick?: (activity: Activity) => void
   onDayClick?: (date: Date) => void
   initialViewMode?: ViewMode
@@ -34,6 +34,11 @@ export function CalendarView({
   onDayClick,
   initialViewMode = 'month',
 }: CalendarViewProps) {
+  // Guard-Clause: Wenn keine Daten vorhanden, nichts anzeigen
+  if (!startDate || !endDate) {
+    return null
+  }
+
   const [viewMode, setViewMode] = useState<ViewMode>(initialViewMode)
   const [currentDate, setCurrentDate] = useState<Date>(() => {
     const start = parseISO(startDate)

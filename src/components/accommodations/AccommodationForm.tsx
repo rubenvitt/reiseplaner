@@ -30,8 +30,8 @@ export interface AccommodationFormData {
   type: AccommodationType
   destinationId?: string
   address: string
-  checkIn: string
-  checkOut: string
+  checkIn?: string
+  checkOut?: string
   price: number
   currency: string
   confirmationNumber?: string
@@ -206,30 +206,25 @@ export function AccommodationForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="checkIn" className="text-sm font-medium">
-            Check-in <span className="text-destructive">*</span>
+            Check-in
           </label>
           <Input
             id="checkIn"
             type="date"
-            {...register('checkIn', { required: 'Check-in Datum ist erforderlich' })}
-            className={cn(errors.checkIn && 'border-destructive')}
+            {...register('checkIn')}
           />
-          {errors.checkIn && (
-            <p className="text-sm text-destructive">{errors.checkIn.message}</p>
-          )}
         </div>
 
         <div className="space-y-2">
           <label htmlFor="checkOut" className="text-sm font-medium">
-            Check-out <span className="text-destructive">*</span>
+            Check-out
           </label>
           <Input
             id="checkOut"
             type="date"
             {...register('checkOut', {
-              required: 'Check-out Datum ist erforderlich',
               validate: (value) => {
-                if (checkIn && value < checkIn) {
+                if (checkIn && value && value < checkIn) {
                   return 'Check-out muss nach dem Check-in liegen'
                 }
                 return true
