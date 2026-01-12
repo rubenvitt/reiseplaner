@@ -41,7 +41,7 @@ export function Dashboard() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Meine Reisen</h1>
+        <h1 className="text-3xl font-bold text-foreground">Meine Reisen</h1>
         <Button
           onClick={() => setIsCreateDialogOpen(true)}
           data-tour="create-trip"

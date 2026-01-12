@@ -54,7 +54,7 @@ export function PackingItem({
           {item.isEssential && (
             <Badge
               variant="secondary"
-              className="shrink-0 gap-1 text-amber-600 bg-amber-100 border-amber-200"
+              className="shrink-0 gap-1 text-amber-600 bg-amber-100 border-amber-200 dark:text-amber-400 dark:bg-amber-900/30 dark:border-amber-800"
             >
               <Star className="h-3 w-3 fill-current" />
               Wichtig

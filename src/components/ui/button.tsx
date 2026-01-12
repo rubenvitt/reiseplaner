@@ -44,7 +44,7 @@ interface RippleProps {
 
 const Ripple = React.memo(({ x, y, size }: RippleProps) => (
   <motion.span
-    className="absolute rounded-full bg-white/30 pointer-events-none"
+    className="absolute rounded-full bg-foreground/20 pointer-events-none"
     style={{
       left: x - size / 2,
       top: y - size / 2,

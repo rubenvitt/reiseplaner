@@ -79,22 +79,22 @@ export function MapControls({
   return (
     <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
       {/* Zoom Controls */}
-      <div className="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="flex flex-col bg-card rounded-lg shadow-lg overflow-hidden border border-border">
         <button
           onClick={handleZoomIn}
-          className="p-2 hover:bg-gray-100 transition-colors border-b border-gray-200"
+          className="p-2 hover:bg-accent transition-colors border-b border-border"
           title="Hineinzoomen"
           aria-label="Hineinzoomen"
         >
-          <Plus className="w-5 h-5 text-gray-700" />
+          <Plus className="w-5 h-5 text-foreground" />
         </button>
         <button
           onClick={handleZoomOut}
-          className="p-2 hover:bg-gray-100 transition-colors"
+          className="p-2 hover:bg-accent transition-colors"
           title="Herauszoomen"
           aria-label="Herauszoomen"
         >
-          <Minus className="w-5 h-5 text-gray-700" />
+          <Minus className="w-5 h-5 text-foreground" />
         </button>
       </div>
 
@@ -103,7 +103,7 @@ export function MapControls({
         onClick={handleLocate}
         disabled={isLocating}
         className={cn(
-          'p-2 bg-white rounded-lg shadow-lg hover:bg-gray-100 transition-colors',
+          'p-2 bg-card rounded-lg shadow-lg border border-border hover:bg-accent transition-colors',
           isLocating && 'animate-pulse'
         )}
         title="Mein Standort"
@@ -112,7 +112,7 @@ export function MapControls({
         <Locate
           className={cn(
             'w-5 h-5',
-            isLocating ? 'text-blue-500' : 'text-gray-700'
+            isLocating ? 'text-primary' : 'text-foreground'
           )}
         />
       </button>
@@ -120,11 +120,11 @@ export function MapControls({
       {/* Reset View Button */}
       <button
         onClick={handleResetView}
-        className="p-2 bg-white rounded-lg shadow-lg hover:bg-gray-100 transition-colors"
+        className="p-2 bg-card rounded-lg shadow-lg border border-border hover:bg-accent transition-colors"
         title="Ansicht zuruecksetzen"
         aria-label="Ansicht zuruecksetzen"
       >
-        <RotateCcw className="w-5 h-5 text-gray-700" />
+        <RotateCcw className="w-5 h-5 text-foreground" />
       </button>
 
       {/* Layer Switcher */}
@@ -133,18 +133,18 @@ export function MapControls({
           <button
             onClick={() => setIsLayerMenuOpen(!isLayerMenuOpen)}
             className={cn(
-              'p-2 bg-white rounded-lg shadow-lg hover:bg-gray-100 transition-colors',
-              isLayerMenuOpen && 'bg-gray-100'
+              'p-2 bg-card rounded-lg shadow-lg border border-border hover:bg-accent transition-colors',
+              isLayerMenuOpen && 'bg-accent'
             )}
             title="Kartentyp wechseln"
             aria-label="Kartentyp wechseln"
           >
-            <Layers className="w-5 h-5 text-gray-700" />
+            <Layers className="w-5 h-5 text-foreground" />
           </button>
 
           {/* Layer Menu */}
           {isLayerMenuOpen && (
-            <div className="absolute top-0 right-12 bg-white rounded-lg shadow-lg overflow-hidden min-w-[140px]">
+            <div className="absolute top-0 right-12 bg-card rounded-lg shadow-lg overflow-hidden min-w-[140px] border border-border">
               {layers.map((layer) => {
                 const Icon = layer.icon
                 return (
@@ -152,8 +152,8 @@ export function MapControls({
                     key={layer.id}
                     onClick={() => handleLayerChange(layer.id)}
                     className={cn(
-                      'w-full px-3 py-2 flex items-center gap-2 hover:bg-gray-100 transition-colors text-left',
-                      currentLayer === layer.id && 'bg-blue-50 text-blue-600'
+                      'w-full px-3 py-2 flex items-center gap-2 hover:bg-accent transition-colors text-left',
+                      currentLayer === layer.id && 'bg-primary/10 text-primary'
                     )}
                   >
                     <Icon className="w-4 h-4" />

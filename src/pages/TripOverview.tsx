@@ -79,30 +79,30 @@ export function TripOverview() {
   return (
     <div className="space-y-6">
       {/* Trip Info Card */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold mb-4">Reiseübersicht</h2>
+      <div className="bg-card rounded-lg shadow p-6">
+        <h2 className="text-xl font-semibold text-foreground mb-4">Reiseübersicht</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <p className="text-sm text-gray-500">Reisezeitraum</p>
-            <p className="text-gray-900">
+            <p className="text-sm text-muted-foreground">Reisezeitraum</p>
+            <p className="text-foreground">
               {formatDate(trip.startDate)} - {formatDate(trip.endDate)}
             </p>
           </div>
 
           {trip.description && (
             <div className="md:col-span-2">
-              <p className="text-sm text-gray-500">Beschreibung</p>
-              <p className="text-gray-900">{trip.description}</p>
+              <p className="text-sm text-muted-foreground">Beschreibung</p>
+              <p className="text-foreground">{trip.description}</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Destinations */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-card rounded-lg shadow p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">Reiseziele</h2>
+          <h2 className="text-xl font-semibold text-foreground">Reiseziele</h2>
           <Button size="sm" onClick={() => setIsAddDialogOpen(true)}>
             <Plus className="mr-1 h-4 w-4" />
             Reiseziel hinzufügen
@@ -111,11 +111,11 @@ export function TripOverview() {
 
         {sortedDestinations.length === 0 ? (
           <div className="text-center py-8">
-            <MapPin className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-            <p className="text-lg font-medium text-gray-500 mb-2">
+            <MapPin className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
+            <p className="text-lg font-medium text-muted-foreground mb-2">
               Keine Reiseziele vorhanden
             </p>
-            <p className="text-gray-400 mb-4">
+            <p className="text-muted-foreground/70 mb-4">
               Füge dein erstes Reiseziel für diese Reise hinzu.
             </p>
             <Button onClick={() => setIsAddDialogOpen(true)}>

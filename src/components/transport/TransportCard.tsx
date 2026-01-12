@@ -127,8 +127,8 @@ export function TransportCard({
               <Badge
                 className={
                   isPaid
-                    ? 'bg-green-500 text-white hover:bg-green-600'
-                    : 'bg-red-500 text-white hover:bg-red-600'
+                    ? 'bg-green-500 text-white hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700'
+                    : 'bg-red-500 text-white hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700'
                 }
               >
                 {isPaid ? (
@@ -311,7 +311,7 @@ export function TransportCard({
                 variant="outline"
                 size="sm"
                 onClick={onTogglePaid}
-                className={isPaid ? 'text-red-600 hover:text-red-700' : 'text-green-600 hover:text-green-700'}
+                className={isPaid ? 'text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300' : 'text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300'}
               >
                 {isPaid ? (
                   <>

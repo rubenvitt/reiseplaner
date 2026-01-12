@@ -32,6 +32,28 @@
     @apply bg-background text-foreground;
   }
 
+  /* Leaflet Popup Dark Mode Styles */
+  .leaflet-popup-content-wrapper {
+    @apply bg-card text-card-foreground border border-border shadow-lg;
+  }
+  .leaflet-popup-tip {
+    @apply bg-card border-border;
+  }
+  .leaflet-popup-close-button {
+    @apply text-muted-foreground hover:text-foreground;
+  }
+
+  /* Mapbox Popup Dark Mode Styles */
+  .mapboxgl-popup-content {
+    @apply bg-card text-card-foreground border border-border shadow-lg rounded-lg;
+  }
+  .mapboxgl-popup-tip {
+    border-top-color: var(--color-card) !important;
+  }
+  .mapboxgl-popup-close-button {
+    @apply text-muted-foreground hover:text-foreground;
+  }
+
   /* Dark Mode */
   .dark {
     --color-background: oklch(0.145 0.039 264.7);

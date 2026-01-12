@@ -115,8 +115,8 @@ export function AccommodationsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Reise nicht gefunden</h1>
-          <Link to="/" className="text-blue-600 hover:underline">
+          <h1 className="text-2xl font-bold text-foreground mb-4">Reise nicht gefunden</h1>
+          <Link to="/" className="text-primary hover:underline">
             Zur Startseite
           </Link>
         </div>
@@ -130,7 +130,7 @@ export function AccommodationsPage() {
       <div className="mb-6">
         <Link
           to={`/trip/${tripId}`}
-          className="text-blue-600 hover:underline text-sm"
+          className="text-primary hover:underline text-sm"
         >
           ← Zurück zur Reise
         </Link>
@@ -138,7 +138,7 @@ export function AccommodationsPage() {
 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">
+        <h1 className="text-3xl font-bold text-foreground">
           Unterkünfte
         </h1>
         <Button onClick={() => setIsAddDialogOpen(true)}>
@@ -179,9 +179,9 @@ export function AccommodationsPage() {
 
       {/* Accommodation List or Empty State */}
       {accommodations.length === 0 ? (
-        <div className="bg-white rounded-lg shadow p-8">
-          <div className="text-center text-gray-500">
-            <Building2 className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+        <div className="bg-card rounded-lg shadow p-8">
+          <div className="text-center text-muted-foreground">
+            <Building2 className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
             <p className="text-lg font-medium mb-2">Keine Unterkünfte vorhanden</p>
             <p className="mb-4">Füge deine erste Unterkunft für diese Reise hinzu.</p>
             <Button onClick={() => setIsAddDialogOpen(true)}>

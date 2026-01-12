@@ -373,7 +373,7 @@ export function ExportImport() {
               <DialogTitle className="flex items-center gap-2">
                 {importState.success ? (
                   <>
-                    <Check className="h-5 w-5 text-green-500" />
+                    <Check className="h-5 w-5 text-green-500 dark:text-green-400" />
                     Import erfolgreich
                   </>
                 ) : (
@@ -387,7 +387,7 @@ export function ExportImport() {
 
             <div className="mt-4">
               {importState.success ? (
-                <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20 dark:bg-green-900/20 dark:border-green-800/30">
                   <p className="text-sm">
                     Die Daten wurden erfolgreich importiert. Die Änderungen sind sofort sichtbar.
                   </p>
