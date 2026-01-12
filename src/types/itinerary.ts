@@ -20,6 +20,8 @@ export interface Activity {
   isCompleted: boolean
   cost?: number
   bookingReference?: string
+  latitude?: number
+  longitude?: number
 }
 
 export type ActivityCategory =

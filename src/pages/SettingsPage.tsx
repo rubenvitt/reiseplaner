@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Settings, Database, Trash2, Info } from 'lucide-react'
+import { Settings, Database, Trash2, Info, Palette } from 'lucide-react'
 import {
   Card,
   CardHeader,
@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
+  ThemeToggle,
 } from '@/components/ui'
 import { ExportImport } from '@/components/shared'
 import {
@@ -76,22 +77,46 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-muted/50">
       <div className="max-w-3xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
-          <div className="p-2 bg-blue-100 rounded-lg">
-            <Settings className="h-6 w-6 text-blue-600" />
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <Settings className="h-6 w-6 text-primary" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Einstellungen</h1>
+          <h1 className="text-2xl font-bold text-foreground">Einstellungen</h1>
         </div>
 
         <div className="space-y-6">
+          {/* Erscheinungsbild Section */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Palette className="h-5 w-5 text-muted-foreground" />
+                <CardTitle>Erscheinungsbild</CardTitle>
+              </div>
+              <CardDescription>
+                Passe das Aussehen der App an deine Vorlieben an.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-foreground">Farbschema</p>
+                  <p className="text-sm text-muted-foreground">
+                    Wähle zwischen hellem, dunklem oder System-Modus.
+                  </p>
+                </div>
+                <ThemeToggle />
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Daten verwalten Section */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Database className="h-5 w-5 text-gray-500" />
+                <Database className="h-5 w-5 text-muted-foreground" />
                 <CardTitle>Daten verwalten</CardTitle>
               </div>
               <CardDescription>
@@ -103,20 +128,20 @@ export function SettingsPage() {
               <ExportImport />
 
               {/* Divider */}
-              <div className="border-t border-gray-200" />
+              <div className="border-t border-border" />
 
               {/* Delete all data */}
               <div className="space-y-3">
-                <h3 className="text-sm font-medium text-gray-900">Gefahrenzone</h3>
+                <h3 className="text-sm font-medium text-foreground">Gefahrenzone</h3>
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg space-y-3">
                   <div className="flex items-start gap-3">
                     <Trash2 className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-medium text-red-900">Alle Daten loeschen</p>
+                      <p className="font-medium text-red-900">Alle Daten löschen</p>
                       <p className="text-sm text-red-700 mt-1">
-                        Diese Aktion loescht alle Reisen, Unterkuenfte, Ausgaben und Packlisten
+                        Diese Aktion löscht alle Reisen, Unterkünfte, Ausgaben und Packlisten
                         unwiderruflich. Erstelle vorher ein Backup, wenn du deine Daten behalten
-                        moechtest.
+                        möchtest.
                       </p>
                     </div>
                   </div>
@@ -126,26 +151,26 @@ export function SettingsPage() {
                     className="w-full sm:w-auto"
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
-                    Alle Daten loeschen
+                    Alle Daten löschen
                   </Button>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Ueber die App Section */}
+          {/* Über die App Section */}
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <Info className="h-5 w-5 text-gray-500" />
-                <CardTitle>Ueber die App</CardTitle>
+                <Info className="h-5 w-5 text-muted-foreground" />
+                <CardTitle>Über die App</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-blue-100 rounded-xl">
+                <div className="p-3 bg-primary/10 rounded-xl">
                   <svg
-                    className="h-8 w-8 text-blue-600"
+                    className="h-8 w-8 text-primary"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -158,17 +183,17 @@ export function SettingsPage() {
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-gray-900">Reiseplaner</h2>
-                  <p className="text-sm text-gray-500">Version 1.0.0</p>
+                  <h2 className="text-lg font-semibold text-foreground">Reiseplaner</h2>
+                  <p className="text-sm text-muted-foreground">Version 1.0.0</p>
                 </div>
               </div>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Der Reiseplaner hilft dir, deine Reisen zu organisieren. Plane Routen, verwalte
-                Unterkuenfte, behalte dein Budget im Blick und erstelle Packlisten - alles an einem
-                Ort. Deine Daten werden lokal auf deinem Geraet gespeichert.
+                Unterkünfte, behalte dein Budget im Blick und erstelle Packlisten - alles an einem
+                Ort. Deine Daten werden lokal auf deinem Gerät gespeichert.
               </p>
-              <div className="pt-2 border-t border-gray-100">
-                <p className="text-xs text-gray-400">
+              <div className="pt-2 border-t border-border">
+                <p className="text-xs text-muted-foreground/70">
                   Mit Liebe entwickelt. Alle Daten werden lokal in deinem Browser gespeichert.
                 </p>
               </div>
@@ -183,11 +208,11 @@ export function SettingsPage() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-red-600">
               <Trash2 className="h-5 w-5" />
-              Alle Daten loeschen?
+              Alle Daten löschen?
             </DialogTitle>
             <DialogDescription className="pt-2">
-              Diese Aktion kann nicht rueckgaengig gemacht werden. Alle deine Reisen,
-              Unterkuenfte, Ausgaben und Packlisten werden unwiderruflich geloescht.
+              Diese Aktion kann nicht rückgängig gemacht werden. Alle deine Reisen,
+              Unterkünfte, Ausgaben und Packlisten werden unwiderruflich gelöscht.
             </DialogDescription>
           </DialogHeader>
 
@@ -195,7 +220,7 @@ export function SettingsPage() {
             <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
               <p className="text-sm text-amber-800">
                 Gib <span className="font-mono font-bold">LOESCHEN</span> ein, um zu
-                bestaetigen.
+                bestätigen.
               </p>
             </div>
             <Input
@@ -215,7 +240,7 @@ export function SettingsPage() {
               onClick={handleDeleteAllData}
               disabled={deleteConfirmation !== 'LOESCHEN' || isDeleting}
             >
-              {isDeleting ? 'Wird geloescht...' : 'Endgueltig loeschen'}
+              {isDeleting ? 'Wird gelöscht...' : 'Endgültig löschen'}
             </Button>
           </DialogFooter>
         </DialogContent>

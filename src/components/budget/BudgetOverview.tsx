@@ -17,7 +17,7 @@ const CATEGORY_LABELS: Record<ExpenseCategory, string> = {
   accommodation: 'Unterkunft',
   transport: 'Transport',
   food: 'Essen',
-  activities: 'Aktivitaeten',
+  activities: 'Aktivitäten',
   shopping: 'Shopping',
   insurance: 'Versicherung',
   visa: 'Visum',
@@ -76,7 +76,7 @@ export function BudgetOverview({ tripId, totalBudget, currency }: BudgetOverview
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Wallet className="h-5 w-5" />
-          Budget-Uebersicht
+          Budget-Übersicht
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -137,7 +137,7 @@ export function BudgetOverview({ tripId, totalBudget, currency }: BudgetOverview
             <div className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-red-800 dark:bg-red-900/20 dark:text-red-200">
               <AlertTriangle className="h-5 w-5 flex-shrink-0" />
               <p className="text-sm">
-                Budget ueberschritten! Du hast {formatCurrency(Math.abs(remaining), currency)} mehr ausgegeben als geplant.
+                Budget überschritten! Du hast {formatCurrency(Math.abs(remaining), currency)} mehr ausgegeben als geplant.
               </p>
             </div>
           )}
@@ -147,7 +147,7 @@ export function BudgetOverview({ tripId, totalBudget, currency }: BudgetOverview
         {categoryBreakdown.length > 0 && (
           <div className="space-y-3">
             <h4 className="font-medium text-sm text-muted-foreground">
-              Aufschluesselung nach Kategorie
+              Aufschlüsselung nach Kategorie
             </h4>
             <div className="space-y-3">
               {categoryBreakdown.map(({ category, label, color, amount }) => {

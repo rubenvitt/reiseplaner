@@ -32,7 +32,7 @@ const TEMPLATES: PackingTemplate[] = [
   {
     id: 'beach',
     name: 'Strandurlaub',
-    description: 'Alles fuer entspannte Tage am Meer',
+    description: 'Alles für entspannte Tage am Meer',
     icon: <Umbrella className="h-6 w-6" />,
     categories: [
       {
@@ -46,7 +46,7 @@ const TEMPLATES: PackingTemplate[] = [
           { name: 'Sommerkleid', quantity: 2, isEssential: false },
           { name: 'Flip-Flops', quantity: 1, isEssential: true },
           { name: 'Sandalen', quantity: 1, isEssential: false },
-          { name: 'Unterwaesche', quantity: 7, isEssential: true },
+          { name: 'Unterwäsche', quantity: 7, isEssential: true },
           { name: 'Sonnenhut', quantity: 1, isEssential: true },
         ],
       },
@@ -67,7 +67,7 @@ const TEMPLATES: PackingTemplate[] = [
         name: 'Hygiene',
         icon: '🧴',
         items: [
-          { name: 'Zahnbuerste', quantity: 1, isEssential: true },
+          { name: 'Zahnbürste', quantity: 1, isEssential: true },
           { name: 'Zahnpasta', quantity: 1, isEssential: true },
           { name: 'Shampoo', quantity: 1, isEssential: true },
           { name: 'Duschgel', quantity: 1, isEssential: true },
@@ -80,19 +80,19 @@ const TEMPLATES: PackingTemplate[] = [
         name: 'Elektronik',
         icon: '📱',
         items: [
-          { name: 'Handy-Ladegeraet', quantity: 1, isEssential: true },
+          { name: 'Handy-Ladegerät', quantity: 1, isEssential: true },
           { name: 'Kamera', quantity: 1, isEssential: false },
           { name: 'E-Book-Reader', quantity: 1, isEssential: false },
           { name: 'Powerbank', quantity: 1, isEssential: false },
-          { name: 'Kopfhoerer', quantity: 1, isEssential: false },
+          { name: 'Kopfhörer', quantity: 1, isEssential: false },
         ],
       },
     ],
   },
   {
     id: 'city',
-    name: 'Staedtereise',
-    description: 'Perfekt fuer Sightseeing und Kultur',
+    name: 'Städtereise',
+    description: 'Perfekt für Sightseeing und Kultur',
     icon: <Building2 className="h-6 w-6" />,
     categories: [
       {
@@ -106,7 +106,7 @@ const TEMPLATES: PackingTemplate[] = [
           { name: 'Jacke', quantity: 1, isEssential: true },
           { name: 'Bequeme Schuhe', quantity: 1, isEssential: true },
           { name: 'Elegante Schuhe', quantity: 1, isEssential: false },
-          { name: 'Unterwaesche', quantity: 5, isEssential: true },
+          { name: 'Unterwäsche', quantity: 5, isEssential: true },
           { name: 'Socken', quantity: 5, isEssential: true },
         ],
       },
@@ -126,11 +126,11 @@ const TEMPLATES: PackingTemplate[] = [
         name: 'Elektronik',
         icon: '💻',
         items: [
-          { name: 'Handy-Ladegeraet', quantity: 1, isEssential: true },
+          { name: 'Handy-Ladegerät', quantity: 1, isEssential: true },
           { name: 'Kamera', quantity: 1, isEssential: false },
           { name: 'Reiseadapter', quantity: 1, isEssential: true },
           { name: 'Powerbank', quantity: 1, isEssential: true },
-          { name: 'Kopfhoerer', quantity: 1, isEssential: false },
+          { name: 'Kopfhörer', quantity: 1, isEssential: false },
         ],
       },
       {
@@ -139,7 +139,7 @@ const TEMPLATES: PackingTemplate[] = [
         items: [
           { name: 'Tagesrucksack', quantity: 1, isEssential: true },
           { name: 'Regenschirm', quantity: 1, isEssential: false },
-          { name: 'Reisefuehrer', quantity: 1, isEssential: false },
+          { name: 'Reiseführer', quantity: 1, isEssential: false },
           { name: 'Wasserflasche', quantity: 1, isEssential: false },
           { name: 'Snacks', quantity: 1, isEssential: false },
         ],
@@ -149,7 +149,7 @@ const TEMPLATES: PackingTemplate[] = [
   {
     id: 'hiking',
     name: 'Wanderurlaub',
-    description: 'Ausruestung fuer Outdoor-Abenteuer',
+    description: 'Ausrüstung für Outdoor-Abenteuer',
     icon: <Mountain className="h-6 w-6" />,
     categories: [
       {
@@ -162,17 +162,17 @@ const TEMPLATES: PackingTemplate[] = [
           { name: 'Regenjacke', quantity: 1, isEssential: true },
           { name: 'Wanderschuhe', quantity: 1, isEssential: true },
           { name: 'Wandersocken', quantity: 4, isEssential: true },
-          { name: 'Muetze', quantity: 1, isEssential: false },
+          { name: 'Mütze', quantity: 1, isEssential: false },
           { name: 'Handschuhe', quantity: 1, isEssential: false },
-          { name: 'Unterwaesche', quantity: 5, isEssential: true },
+          { name: 'Unterwäsche', quantity: 5, isEssential: true },
         ],
       },
       {
-        name: 'Ausruestung',
+        name: 'Ausrüstung',
         icon: '🎒',
         items: [
           { name: 'Wanderrucksack', quantity: 1, isEssential: true },
-          { name: 'Wanderstoecke', quantity: 1, isEssential: false },
+          { name: 'Wanderstöcke', quantity: 1, isEssential: false },
           { name: 'Stirnlampe', quantity: 1, isEssential: true },
           { name: 'Taschenmesser', quantity: 1, isEssential: false },
           { name: 'Kompass', quantity: 1, isEssential: false },
@@ -185,8 +185,8 @@ const TEMPLATES: PackingTemplate[] = [
         name: 'Verpflegung',
         icon: '🍎',
         items: [
-          { name: 'Muesli-Riegel', quantity: 10, isEssential: true },
-          { name: 'Nuesse', quantity: 1, isEssential: false },
+          { name: 'Müsli-Riegel', quantity: 10, isEssential: true },
+          { name: 'Nüsse', quantity: 1, isEssential: false },
           { name: 'Trockenobst', quantity: 1, isEssential: false },
           { name: 'Brotdose', quantity: 1, isEssential: false },
           { name: 'Trinkblase', quantity: 1, isEssential: false },
@@ -208,7 +208,7 @@ const TEMPLATES: PackingTemplate[] = [
   },
   {
     id: 'business',
-    name: 'Geschaeftsreise',
+    name: 'Geschäftsreise',
     description: 'Professionell und organisiert unterwegs',
     icon: <Briefcase className="h-6 w-6" />,
     categories: [
@@ -216,12 +216,12 @@ const TEMPLATES: PackingTemplate[] = [
         name: 'Kleidung',
         icon: '👔',
         items: [
-          { name: 'Anzug/Kostuem', quantity: 2, isEssential: true },
+          { name: 'Anzug/Kostüm', quantity: 2, isEssential: true },
           { name: 'Hemden/Blusen', quantity: 3, isEssential: true },
           { name: 'Krawatte/Tuch', quantity: 2, isEssential: false },
           { name: 'Business-Schuhe', quantity: 1, isEssential: true },
-          { name: 'Guertel', quantity: 1, isEssential: true },
-          { name: 'Unterwaesche', quantity: 4, isEssential: true },
+          { name: 'Gürtel', quantity: 1, isEssential: true },
+          { name: 'Unterwäsche', quantity: 4, isEssential: true },
           { name: 'Socken', quantity: 4, isEssential: true },
           { name: 'Schlafanzug', quantity: 1, isEssential: false },
           { name: 'Sportkleidung', quantity: 1, isEssential: false },
@@ -233,11 +233,11 @@ const TEMPLATES: PackingTemplate[] = [
         items: [
           { name: 'Reisepass/Ausweis', quantity: 1, isEssential: true },
           { name: 'Visitenkarten', quantity: 1, isEssential: true },
-          { name: 'Praesentation (USB)', quantity: 1, isEssential: true },
+          { name: 'Präsentation (USB)', quantity: 1, isEssential: true },
           { name: 'Notizblock', quantity: 1, isEssential: true },
           { name: 'Firmenkreditkarte', quantity: 1, isEssential: true },
           { name: 'Flugtickets', quantity: 1, isEssential: true },
-          { name: 'Hotelbestaetigung', quantity: 1, isEssential: true },
+          { name: 'Hotelbestätigung', quantity: 1, isEssential: true },
         ],
       },
       {
@@ -245,10 +245,10 @@ const TEMPLATES: PackingTemplate[] = [
         icon: '💼',
         items: [
           { name: 'Laptop', quantity: 1, isEssential: true },
-          { name: 'Laptop-Ladegeraet', quantity: 1, isEssential: true },
-          { name: 'Handy-Ladegeraet', quantity: 1, isEssential: true },
+          { name: 'Laptop-Ladegerät', quantity: 1, isEssential: true },
+          { name: 'Handy-Ladegerät', quantity: 1, isEssential: true },
           { name: 'Reiseadapter', quantity: 1, isEssential: true },
-          { name: 'Kopfhoerer', quantity: 1, isEssential: false },
+          { name: 'Kopfhörer', quantity: 1, isEssential: false },
           { name: 'HDMI-Kabel', quantity: 1, isEssential: false },
           { name: 'USB-Stick', quantity: 1, isEssential: true },
         ],
@@ -257,12 +257,12 @@ const TEMPLATES: PackingTemplate[] = [
         name: 'Hygiene',
         icon: '🧳',
         items: [
-          { name: 'Zahnbuerste', quantity: 1, isEssential: true },
+          { name: 'Zahnbürste', quantity: 1, isEssential: true },
           { name: 'Zahnpasta', quantity: 1, isEssential: true },
           { name: 'Deodorant', quantity: 1, isEssential: true },
-          { name: 'Parfuem/Aftershave', quantity: 1, isEssential: false },
+          { name: 'Parfüm/Aftershave', quantity: 1, isEssential: false },
           { name: 'Rasierer', quantity: 1, isEssential: true },
-          { name: 'Haarbuerste', quantity: 1, isEssential: false },
+          { name: 'Haarbürste', quantity: 1, isEssential: false },
           { name: 'Medikamente', quantity: 1, isEssential: false },
         ],
       },
@@ -279,9 +279,9 @@ export function PackingTemplates({ onSelect, onCancel }: PackingTemplatesProps) 
   return (
     <div className="space-y-4">
       <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold mb-2">Vorlage auswaehlen</h3>
+        <h3 className="text-lg font-semibold mb-2">Vorlage auswählen</h3>
         <p className="text-sm text-muted-foreground">
-          Waehle eine Vorlage als Ausgangspunkt fuer deine Packliste
+          Wähle eine Vorlage als Ausgangspunkt für deine Packliste
         </p>
       </div>
 

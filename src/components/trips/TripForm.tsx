@@ -129,7 +129,7 @@ export function TripForm({ trip, onSubmit, onCancel }: TripFormProps) {
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="currency" className="text-sm font-medium">
-            Waehrung
+            Währung
           </label>
           <select
             id="currency"

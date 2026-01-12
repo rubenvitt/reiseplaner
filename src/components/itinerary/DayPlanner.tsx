@@ -11,9 +11,9 @@ import {
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import { eachDayOfInterval, format, parseISO } from 'date-fns'
-import { useItineraryStore } from '@/stores'
+import { useItineraryStore, useTripStore } from '@/stores'
 import { DayCard } from './DayCard'
-import type { Activity } from '@/types'
+import type { Activity, Destination } from '@/types'
 
 interface DayPlannerProps {
   tripId: string
@@ -28,6 +28,17 @@ export function DayPlanner({ tripId, startDate, endDate }: DayPlannerProps) {
     addDayPlan,
     reorderActivities,
   } = useItineraryStore()
+
+  const { getTrip } = useTripStore()
+  const trip = getTrip(tripId)
+  const destinations = trip?.destinations ?? []
+
+  // Helper: Findet das Reiseziel für ein bestimmtes Datum
+  const getDestinationForDate = (date: string): Destination | undefined => {
+    return destinations.find((dest) => {
+      return dest.arrivalDate <= date && date <= dest.departureDate
+    })
+  }
 
   const [activeActivity, setActiveActivity] = useState<Activity | null>(null)
 
@@ -52,12 +63,15 @@ export function DayPlanner({ tripId, startDate, endDate }: DayPlannerProps) {
       const existingDayPlan = getDayPlanByDate(tripId, dateStr)
 
       if (!existingDayPlan) {
+        const destination = getDestinationForDate(dateStr)
         addDayPlan({
           tripId,
           date: dateStr,
+          destinationId: destination?.id,
         })
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only run when date range changes
   }, [tripId, startDate, endDate])
 
   const dayPlans = getDayPlansByTrip(tripId)
@@ -134,7 +148,16 @@ export function DayPlanner({ tripId, startDate, endDate }: DayPlannerProps) {
             return null
           }
 
-          return <DayCard key={dayPlan.id} dayPlan={dayPlan} date={dateStr} />
+          const destination = getDestinationForDate(dateStr)
+
+          return (
+            <DayCard
+              key={dayPlan.id}
+              dayPlan={dayPlan}
+              date={dateStr}
+              destinationName={destination?.name}
+            />
+          )
         })}
       </div>
 

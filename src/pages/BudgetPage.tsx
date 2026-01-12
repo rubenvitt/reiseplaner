@@ -69,8 +69,8 @@ export function BudgetPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center text-gray-500">
           <p>Reise nicht gefunden.</p>
-          <Link to="/trips" className="text-primary hover:underline">
-            Zurueck zur Uebersicht
+          <Link to="/" className="text-primary hover:underline">
+            Zurück zur Übersicht
           </Link>
         </div>
       </div>
@@ -85,7 +85,7 @@ export function BudgetPage() {
           to={`/trip/${tripId}`}
           className="text-primary hover:underline text-sm"
         >
-          ← Zurueck zur Reise
+          ← Zurück zur Reise
         </Link>
       </div>
 
@@ -110,7 +110,7 @@ export function BudgetPage() {
           <h2 className="text-xl font-semibold text-foreground">Ausgaben</h2>
           <Button onClick={() => setIsAddDialogOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
-            Ausgabe hinzufuegen
+            Ausgabe hinzufügen
           </Button>
         </div>
 
@@ -121,11 +121,11 @@ export function BudgetPage() {
               <Wallet className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
               <p className="text-lg font-medium mb-2">Keine Ausgaben vorhanden</p>
               <p className="mb-4">
-                Fuege deine erste Ausgabe hinzu, um den Ueberblick ueber dein Budget zu behalten.
+                Füge deine erste Ausgabe hinzu, um den Überblick über dein Budget zu behalten.
               </p>
               <Button onClick={() => setIsAddDialogOpen(true)}>
                 <Plus className="mr-2 h-4 w-4" />
-                Erste Ausgabe hinzufuegen
+                Erste Ausgabe hinzufügen
               </Button>
             </div>
           </div>
@@ -150,7 +150,7 @@ export function BudgetPage() {
           <DialogHeader>
             <DialogTitle>Neue Ausgabe</DialogTitle>
             <DialogDescription>
-              Erfasse eine neue Ausgabe fuer diese Reise.
+              Erfasse eine neue Ausgabe für diese Reise.
             </DialogDescription>
           </DialogHeader>
           <ExpenseForm
@@ -193,10 +193,10 @@ export function BudgetPage() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Ausgabe loeschen</DialogTitle>
+            <DialogTitle>Ausgabe löschen</DialogTitle>
             <DialogDescription>
-              Bist du sicher, dass du die Ausgabe "{deletingExpense?.title}" loeschen moechtest?
-              Diese Aktion kann nicht rueckgaengig gemacht werden.
+              Bist du sicher, dass du die Ausgabe "{deletingExpense?.title}" löschen möchtest?
+              Diese Aktion kann nicht rückgängig gemacht werden.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -210,7 +210,7 @@ export function BudgetPage() {
               variant="destructive"
               onClick={handleConfirmDelete}
             >
-              Loeschen
+              Löschen
             </Button>
           </DialogFooter>
         </DialogContent>

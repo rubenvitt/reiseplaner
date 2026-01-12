@@ -18,6 +18,8 @@ export interface Accommodation {
   }
   notes?: string
   amenities?: string[]
+  latitude?: number
+  longitude?: number
 }
 
 export type AccommodationType =

@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom'
 import { Menu, X, Map } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Sidebar } from './Sidebar'
+import { ThemeToggle } from '@/components/ui'
 
 const pageTitles: Record<string, string> = {
   '/': 'Dashboard',
-  '/trips': 'Reisen',
   '/settings': 'Einstellungen',
 }
 
@@ -17,7 +17,7 @@ function getPageTitle(pathname: string): string {
   }
 
   // Check for trip detail pages
-  if (pathname.startsWith('/trips/')) {
+  if (pathname.startsWith('/trip/')) {
     return 'Reise Details'
   }
 
@@ -31,14 +31,14 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
+      <header className="sticky top-0 z-40 bg-background border-b border-border">
         <div className="h-16 px-4 lg:px-6 flex items-center justify-between">
           {/* Mobile: Logo and Menu Button */}
           <div className="flex items-center gap-3 lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 -ml-2 rounded-lg text-gray-600 hover:bg-gray-100"
-              aria-label={isMobileMenuOpen ? 'Menu schliessen' : 'Menu oeffnen'}
+              className="p-2 -ml-2 rounded-lg text-muted-foreground hover:bg-accent"
+              aria-label={isMobileMenuOpen ? 'Menü schließen' : 'Menü öffnen'}
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -47,23 +47,23 @@ export function Header() {
               )}
             </button>
             <div className="flex items-center gap-2">
-              <Map className="h-5 w-5 text-blue-600" />
-              <span className="font-semibold text-gray-900">Reiseplaner</span>
+              <Map className="h-5 w-5 text-primary" />
+              <span className="font-semibold text-foreground">Reiseplaner</span>
             </div>
           </div>
 
           {/* Page Title */}
-          <h1 className="hidden lg:block text-lg font-semibold text-gray-900">
+          <h1 className="hidden lg:block text-lg font-semibold text-foreground">
             {pageTitle}
           </h1>
 
           {/* Mobile: Page Title (centered) */}
-          <h1 className="lg:hidden text-lg font-semibold text-gray-900 absolute left-1/2 transform -translate-x-1/2">
+          <h1 className="lg:hidden text-lg font-semibold text-foreground absolute left-1/2 transform -translate-x-1/2">
             {pageTitle}
           </h1>
 
-          {/* Placeholder for right side actions */}
-          <div className="w-10 lg:w-auto" />
+          {/* Theme Toggle */}
+          <ThemeToggle className="hidden lg:flex" />
         </div>
       </header>
 

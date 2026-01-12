@@ -1,9 +1,16 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTripStore } from '@/stores';
 import { DayPlanner } from '@/components/itinerary';
-import { ChevronLeft, Calendar } from 'lucide-react';
+import { CalendarView } from '@/components/calendar';
+import { ChevronLeft, Calendar, List, LayoutGrid } from 'lucide-react';
+import { Button } from '@/components/ui';
+import { cn } from '@/lib/utils';
+
+type ViewMode = 'list' | 'calendar';
 
 export function ItineraryPage() {
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const { tripId } = useParams<{ tripId: string }>();
   const trip = useTripStore((state) => state.getTrip(tripId || ''));
 
@@ -16,14 +23,14 @@ export function ItineraryPage() {
             Reise nicht gefunden
           </h2>
           <p className="text-gray-500 mb-6">
-            Die angeforderte Reise existiert nicht oder wurde geloescht.
+            Die angeforderte Reise existiert nicht oder wurde gelöscht.
           </p>
           <Link
-            to="/trips"
+            to="/"
             className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
-            Zurueck zu meinen Reisen
+            Zurück zu meinen Reisen
           </Link>
         </div>
       </div>
@@ -37,35 +44,73 @@ export function ItineraryPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-4 mb-2">
             <Link
-              to={`/trips/${tripId}`}
+              to={`/trip/${tripId}`}
               className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
-              Zurueck zur Reise
+              Zurück zur Reise
             </Link>
           </div>
-          <div className="flex items-center gap-3">
-            <Calendar className="w-6 h-6 text-blue-600 flex-shrink-0" />
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                Tagesplanung
-              </h1>
-              <p className="text-sm text-gray-500 mt-0.5">
-                {trip.name}
-              </p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Calendar className="w-6 h-6 text-blue-600 flex-shrink-0" />
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                  Tagesplanung
+                </h1>
+                <p className="text-sm text-gray-500 mt-0.5">
+                  {trip.name}
+                </p>
+              </div>
+            </div>
+
+            {/* View Mode Toggle */}
+            <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
+              <Button
+                variant={viewMode === 'list' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setViewMode('list')}
+                className={cn(
+                  'gap-2',
+                  viewMode === 'list' && 'shadow-sm'
+                )}
+              >
+                <List className="w-4 h-4" />
+                <span className="hidden sm:inline">Liste</span>
+              </Button>
+              <Button
+                variant={viewMode === 'calendar' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setViewMode('calendar')}
+                className={cn(
+                  'gap-2',
+                  viewMode === 'calendar' && 'shadow-sm'
+                )}
+              >
+                <LayoutGrid className="w-4 h-4" />
+                <span className="hidden sm:inline">Kalender</span>
+              </Button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content - DayPlanner */}
+      {/* Main Content */}
       <main className="flex-1 overflow-auto">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6">
-          <DayPlanner
-            tripId={tripId}
-            startDate={trip.startDate}
-            endDate={trip.endDate}
-          />
+          {viewMode === 'list' ? (
+            <DayPlanner
+              tripId={tripId}
+              startDate={trip.startDate}
+              endDate={trip.endDate}
+            />
+          ) : (
+            <CalendarView
+              tripId={tripId}
+              startDate={trip.startDate}
+              endDate={trip.endDate}
+            />
+          )}
         </div>
       </main>
     </div>

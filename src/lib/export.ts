@@ -5,8 +5,11 @@ import {
   useAccommodationStore,
   useBudgetStore,
   usePackingStore,
+  useTransportStore,
+  useTasksStore,
+  useDocumentsStore,
 } from '@/stores'
-import type { Trip, DayPlan, Accommodation, Expense, PackingList } from '@/types'
+import type { Trip, DayPlan, Accommodation, Expense, PackingList, Transport, Task, TripDocument } from '@/types'
 
 /**
  * Export data structure with version information
@@ -20,10 +23,13 @@ export interface ExportData {
     accommodations: Accommodation[]
     expenses: Expense[]
     packingLists: PackingList[]
+    transports: Transport[]
+    tasks: Task[]
+    documents: TripDocument[]
   }
 }
 
-const EXPORT_VERSION = '1.0.0'
+const EXPORT_VERSION = '1.3.0'
 
 /**
  * Downloads data as a JSON file
@@ -43,6 +49,9 @@ export function exportAllData(): ExportData {
   const accommodations = useAccommodationStore.getState().accommodations
   const expenses = useBudgetStore.getState().expenses
   const packingLists = usePackingStore.getState().packingLists
+  const transports = useTransportStore.getState().transports
+  const tasks = useTasksStore.getState().tasks
+  const documents = useDocumentsStore.getState().documents
 
   const exportData: ExportData = {
     version: EXPORT_VERSION,
@@ -53,6 +62,9 @@ export function exportAllData(): ExportData {
       accommodations,
       expenses,
       packingLists,
+      transports,
+      tasks,
+      documents,
     },
   }
 
@@ -86,6 +98,18 @@ export function exportTrip(tripId: string): ExportData | null {
     .getState()
     .packingLists.filter((pl) => pl.tripId === tripId)
 
+  const transports = useTransportStore
+    .getState()
+    .transports.filter((t) => t.tripId === tripId)
+
+  const tasks = useTasksStore
+    .getState()
+    .tasks.filter((t) => t.tripId === tripId)
+
+  const documents = useDocumentsStore
+    .getState()
+    .documents.filter((d) => d.tripId === tripId)
+
   const exportData: ExportData = {
     version: EXPORT_VERSION,
     exportedAt: new Date().toISOString(),
@@ -95,6 +119,9 @@ export function exportTrip(tripId: string): ExportData | null {
       accommodations,
       expenses,
       packingLists,
+      transports,
+      tasks,
+      documents,
     },
   }
 

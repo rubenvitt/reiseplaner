@@ -20,10 +20,10 @@ interface ActivityItemProps {
 }
 
 const categoryLabels: Record<ActivityCategory, string> = {
-  sightseeing: 'Sehenswuerdigkeit',
+  sightseeing: 'Sehenswürdigkeit',
   food: 'Essen',
   transport: 'Transport',
-  activity: 'Aktivitaet',
+  activity: 'Aktivität',
   relaxation: 'Entspannung',
   shopping: 'Shopping',
   other: 'Sonstiges',
@@ -83,7 +83,7 @@ export function ActivityItem({
           'text-muted-foreground hover:text-foreground hover:bg-accent',
           'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'
         )}
-        aria-label="Aktivitaet verschieben"
+        aria-label="Aktivität verschieben"
       >
         <GripVertical className="h-5 w-5" />
       </button>
@@ -163,7 +163,7 @@ export function ActivityItem({
             size="icon"
             className="h-8 w-8"
             onClick={onEdit}
-            aria-label="Aktivitaet bearbeiten"
+            aria-label="Aktivität bearbeiten"
           >
             <Pencil className="h-4 w-4" />
           </Button>
@@ -174,7 +174,7 @@ export function ActivityItem({
             size="icon"
             className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
             onClick={onDelete}
-            aria-label="Aktivitaet loeschen"
+            aria-label="Aktivität löschen"
           >
             <Trash2 className="h-4 w-4" />
           </Button>

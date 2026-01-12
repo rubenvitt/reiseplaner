@@ -120,7 +120,7 @@ export function ExportImport() {
           data: null,
           preview: null,
           mode: 'merge',
-          error: validation.error || 'Ungueltige Importdatei',
+          error: validation.error || 'Ungültige Importdatei',
           success: false,
         })
         return
@@ -152,7 +152,7 @@ export function ExportImport() {
         data: null,
         preview: null,
         mode: 'merge',
-        error: 'Die Datei konnte nicht gelesen werden. Bitte stellen Sie sicher, dass es sich um eine gueltige JSON-Datei handelt.',
+        error: 'Die Datei konnte nicht gelesen werden. Bitte stellen Sie sicher, dass es sich um eine gültige JSON-Datei handelt.',
         success: false,
       })
     } finally {
@@ -228,7 +228,7 @@ export function ExportImport() {
             <DialogHeader>
               <DialogTitle>Daten importieren</DialogTitle>
               <DialogDescription>
-                Waehlen Sie, wie die Daten importiert werden sollen.
+                Wählen Sie, wie die Daten importiert werden sollen.
               </DialogDescription>
             </DialogHeader>
 
@@ -243,11 +243,11 @@ export function ExportImport() {
                       <span className="font-medium">{importState.preview.tripCount}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Tagesplaene:</span>
+                      <span className="text-muted-foreground">Tagespläne:</span>
                       <span className="font-medium">{importState.preview.dayPlanCount}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Unterkuenfte:</span>
+                      <span className="text-muted-foreground">Unterkünfte:</span>
                       <span className="font-medium">{importState.preview.accommodationCount}</span>
                     </div>
                     <div className="flex justify-between">
@@ -284,9 +284,9 @@ export function ExportImport() {
                   className="mt-1"
                 />
                 <div>
-                  <div className="font-medium">Daten zusammenfuehren</div>
+                  <div className="font-medium">Daten zusammenführen</div>
                   <p className="text-sm text-muted-foreground">
-                    Fuegt neue Daten hinzu, ohne bestehende zu ueberschreiben. Duplikate werden uebersprungen.
+                    Fügt neue Daten hinzu, ohne bestehende zu überschreiben. Duplikate werden übersprungen.
                   </p>
                 </div>
               </label>
@@ -310,7 +310,7 @@ export function ExportImport() {
                 <div>
                   <div className="font-medium">Alle Daten ersetzen</div>
                   <p className="text-sm text-muted-foreground">
-                    Loescht alle bestehenden Daten und ersetzt sie durch die importierten.
+                    Löscht alle bestehenden Daten und ersetzt sie durch die importierten.
                   </p>
                 </div>
               </label>
@@ -337,18 +337,18 @@ export function ExportImport() {
                 Alle Daten ersetzen?
               </DialogTitle>
               <DialogDescription>
-                Diese Aktion kann nicht rueckgaengig gemacht werden.
+                Diese Aktion kann nicht rückgängig gemacht werden.
               </DialogDescription>
             </DialogHeader>
 
             <div className="mt-4 p-4 bg-destructive/10 rounded-lg border border-destructive/20">
               <p className="text-sm">
-                Wenn Sie fortfahren, werden <strong>alle bestehenden Daten geloescht</strong> und durch die importierten Daten ersetzt:
+                Wenn Sie fortfahren, werden <strong>alle bestehenden Daten gelöscht</strong> und durch die importierten Daten ersetzt:
               </p>
               <ul className="mt-2 text-sm list-disc list-inside text-muted-foreground">
                 <li>Alle Reisen und Ziele</li>
-                <li>Alle Tagesplaene und Aktivitaeten</li>
-                <li>Alle Unterkuenfte</li>
+                <li>Alle Tagespläne und Aktivitäten</li>
+                <li>Alle Unterkünfte</li>
                 <li>Alle Ausgaben</li>
                 <li>Alle Packlisten</li>
               </ul>
@@ -356,7 +356,7 @@ export function ExportImport() {
 
             <DialogFooter className="mt-6">
               <Button variant="outline" onClick={handleBack}>
-                Zurueck
+                Zurück
               </Button>
               <Button variant="destructive" onClick={handleImport} disabled={isImporting}>
                 {isImporting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -389,7 +389,7 @@ export function ExportImport() {
               {importState.success ? (
                 <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
                   <p className="text-sm">
-                    Die Daten wurden erfolgreich importiert. Die Aenderungen sind sofort sichtbar.
+                    Die Daten wurden erfolgreich importiert. Die Änderungen sind sofort sichtbar.
                   </p>
                 </div>
               ) : (
@@ -401,7 +401,7 @@ export function ExportImport() {
 
             <DialogFooter className="mt-6">
               <Button onClick={() => handleDialogChange(false)}>
-                Schliessen
+                Schließen
               </Button>
             </DialogFooter>
           </>

@@ -1,7 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { MapPin, Loader2 } from 'lucide-react'
 import { Button, Input } from '@/components/ui'
+import { geocodeAddress } from '@/services/geocoding'
 import { Activity, ActivityCategory } from '@/types'
 import { cn } from '@/lib/utils'
 
@@ -24,6 +27,8 @@ export interface ActivityFormData {
   category: ActivityCategory
   cost?: number
   bookingReference?: string
+  latitude?: number
+  longitude?: number
 }
 
 export interface ActivityFormProps {
@@ -33,6 +38,8 @@ export interface ActivityFormProps {
 }
 
 export function ActivityForm({ activity, onSubmit, onCancel }: ActivityFormProps) {
+  const [isGeocoding, setIsGeocoding] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -58,7 +65,29 @@ export function ActivityForm({ activity, onSubmit, onCancel }: ActivityFormProps
     return value >= startTime || 'Endzeit muss nach der Startzeit liegen'
   }
 
-  const handleFormSubmit = (data: ActivityFormData) => {
+  const handleFormSubmit = async (data: ActivityFormData) => {
+    let latitude = activity?.latitude
+    let longitude = activity?.longitude
+
+    // Geocode wenn Location sich geaendert hat oder noch keine Koordinaten vorhanden sind
+    const locationChanged = data.location !== activity?.location
+    const needsGeocoding = (!latitude || !longitude || locationChanged) && data.location
+
+    if (needsGeocoding) {
+      setIsGeocoding(true)
+      try {
+        const coords = await geocodeAddress(data.location!)
+        if (coords) {
+          latitude = coords.lat
+          longitude = coords.lng
+        }
+      } catch (error) {
+        console.error('Geocoding failed:', error)
+      } finally {
+        setIsGeocoding(false)
+      }
+    }
+
     const cleanedData: ActivityFormData = {
       ...data,
       description: data.description || undefined,
@@ -67,6 +96,8 @@ export function ActivityForm({ activity, onSubmit, onCancel }: ActivityFormProps
       location: data.location || undefined,
       cost: data.cost ? Number(data.cost) : undefined,
       bookingReference: data.bookingReference || undefined,
+      latitude,
+      longitude,
     }
     onSubmit(cleanedData)
   }
@@ -193,8 +224,18 @@ export function ActivityForm({ activity, onSubmit, onCancel }: ActivityFormProps
         <Button type="button" variant="outline" onClick={onCancel}>
           Abbrechen
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
-          {activity ? 'Speichern' : 'Erstellen'}
+        <Button type="submit" disabled={isSubmitting || isGeocoding}>
+          {isGeocoding ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Suche Koordinaten...
+            </>
+          ) : (
+            <>
+              <MapPin className="w-4 h-4 mr-2" />
+              {activity ? 'Speichern' : 'Erstellen'}
+            </>
+          )}
         </Button>
       </div>
     </form>

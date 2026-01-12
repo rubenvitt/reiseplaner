@@ -26,7 +26,21 @@ export function AccommodationsPage() {
   const deleteAccommodation = useAccommodationStore((state) => state.deleteAccommodation)
   const togglePaidStatus = useAccommodationStore((state) => state.togglePaidStatus)
 
-  const accommodations = tripId ? getAccommodationsByTrip(tripId) : []
+  const getAccommodationsByDestination = useAccommodationStore((state) => state.getAccommodationsByDestination)
+
+  // Filter State
+  const [selectedDestinationId, setSelectedDestinationId] = useState<string | 'all'>('all')
+
+  // Gefilterte Unterkünfte
+  const allAccommodations = tripId ? getAccommodationsByTrip(tripId) : []
+  const accommodations = selectedDestinationId === 'all'
+    ? allAccommodations
+    : selectedDestinationId === 'none'
+      ? allAccommodations.filter((a) => !a.destinationId)
+      : getAccommodationsByDestination(selectedDestinationId)
+
+  // Destinations aus dem Trip
+  const destinations = trip?.destinations ?? []
 
   // Dialog states
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
@@ -39,6 +53,7 @@ export function AccommodationsPage() {
 
     addAccommodation({
       tripId,
+      destinationId: data.destinationId,
       name: data.name,
       type: data.type,
       address: data.address,
@@ -54,6 +69,8 @@ export function AccommodationsPage() {
         website: data.website,
       },
       notes: data.notes,
+      latitude: data.latitude,
+      longitude: data.longitude,
     })
     setIsAddDialogOpen(false)
   }
@@ -62,6 +79,7 @@ export function AccommodationsPage() {
     if (!editingAccommodation) return
 
     updateAccommodation(editingAccommodation.id, {
+      destinationId: data.destinationId,
       name: data.name,
       type: data.type,
       address: data.address,
@@ -77,6 +95,8 @@ export function AccommodationsPage() {
         website: data.website,
       },
       notes: data.notes,
+      latitude: data.latitude,
+      longitude: data.longitude,
     })
     setEditingAccommodation(null)
   }
@@ -112,45 +132,79 @@ export function AccommodationsPage() {
           to={`/trip/${tripId}`}
           className="text-blue-600 hover:underline text-sm"
         >
-          ← Zurueck zur Reise
+          ← Zurück zur Reise
         </Link>
       </div>
 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold text-gray-900">
-          Unterkuenfte
+          Unterkünfte
         </h1>
         <Button onClick={() => setIsAddDialogOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
-          Unterkunft hinzufuegen
+          Unterkunft hinzufügen
         </Button>
       </div>
+
+      {/* Filter Buttons */}
+      {destinations.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-6">
+          <Button
+            variant={selectedDestinationId === 'all' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setSelectedDestinationId('all')}
+          >
+            Alle
+          </Button>
+          <Button
+            variant={selectedDestinationId === 'none' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setSelectedDestinationId('none')}
+          >
+            Ohne Reiseziel
+          </Button>
+          {destinations.map((destination) => (
+            <Button
+              key={destination.id}
+              variant={selectedDestinationId === destination.id ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setSelectedDestinationId(destination.id)}
+            >
+              {destination.name}
+            </Button>
+          ))}
+        </div>
+      )}
 
       {/* Accommodation List or Empty State */}
       {accommodations.length === 0 ? (
         <div className="bg-white rounded-lg shadow p-8">
           <div className="text-center text-gray-500">
             <Building2 className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-            <p className="text-lg font-medium mb-2">Keine Unterkuenfte vorhanden</p>
-            <p className="mb-4">Fuege deine erste Unterkunft fuer diese Reise hinzu.</p>
+            <p className="text-lg font-medium mb-2">Keine Unterkünfte vorhanden</p>
+            <p className="mb-4">Füge deine erste Unterkunft für diese Reise hinzu.</p>
             <Button onClick={() => setIsAddDialogOpen(true)}>
               <Plus className="mr-2 h-4 w-4" />
-              Unterkunft hinzufuegen
+              Unterkunft hinzufügen
             </Button>
           </div>
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {accommodations.map((accommodation) => (
-            <AccommodationCard
-              key={accommodation.id}
-              accommodation={accommodation}
-              onEdit={() => setEditingAccommodation(accommodation)}
-              onDelete={() => setDeletingAccommodation(accommodation)}
-              onTogglePaid={() => handleTogglePaid(accommodation.id)}
-            />
-          ))}
+          {accommodations.map((accommodation) => {
+            const destination = destinations.find((d) => d.id === accommodation.destinationId)
+            return (
+              <AccommodationCard
+                key={accommodation.id}
+                accommodation={accommodation}
+                destinationName={destination?.name}
+                onEdit={() => setEditingAccommodation(accommodation)}
+                onDelete={() => setDeletingAccommodation(accommodation)}
+                onTogglePaid={() => handleTogglePaid(accommodation.id)}
+              />
+            )
+          })}
         </div>
       )}
 
@@ -195,12 +249,12 @@ export function AccommodationsPage() {
       >
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Unterkunft loeschen</DialogTitle>
+            <DialogTitle>Unterkunft löschen</DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <p className="text-muted-foreground">
-              Moechtest du die Unterkunft "{deletingAccommodation?.name}" wirklich loeschen?
-              Diese Aktion kann nicht rueckgaengig gemacht werden.
+              Möchtest du die Unterkunft "{deletingAccommodation?.name}" wirklich löschen?
+              Diese Aktion kann nicht rückgängig gemacht werden.
             </p>
           </div>
           <div className="flex justify-end gap-2">
@@ -214,7 +268,7 @@ export function AccommodationsPage() {
               variant="destructive"
               onClick={handleConfirmDelete}
             >
-              Loeschen
+              Löschen
             </Button>
           </div>
         </DialogContent>

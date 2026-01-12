@@ -1,20 +1,21 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Map as MapIcon, Settings } from 'lucide-react'
+import { Home, Map as MapIcon, Settings, BarChart3 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { to: '/', icon: Home, label: 'Dashboard' },
+  { to: '/statistics', icon: BarChart3, label: 'Statistiken' },
   { to: '/settings', icon: Settings, label: 'Einstellungen' },
 ]
 
 export function Sidebar() {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200 flex flex-col">
+    <aside className="fixed left-0 top-0 h-screen w-64 bg-background border-r border-border flex flex-col">
       {/* Logo / App Name */}
-      <div className="h-16 flex items-center px-6 border-b border-gray-200">
+      <div className="h-16 flex items-center px-6 border-b border-border">
         <div className="flex items-center gap-2">
-          <MapIcon className="h-6 w-6 text-blue-600" />
-          <span className="text-xl font-semibold text-gray-900">Reiseplaner</span>
+          <MapIcon className="h-6 w-6 text-primary" />
+          <span className="text-xl font-semibold text-foreground">Reiseplaner</span>
         </div>
       </div>
 
@@ -30,8 +31,8 @@ export function Sidebar() {
                   cn(
                     'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
                     isActive
-                      ? 'bg-blue-50 text-blue-700'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-muted-foreground hover:bg-accent hover:text-foreground'
                   )
                 }
               >
@@ -44,8 +45,8 @@ export function Sidebar() {
       </nav>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500 text-center">
+      <div className="p-4 border-t border-border">
+        <p className="text-xs text-muted-foreground text-center">
           Reiseplaner v1.0
         </p>
       </div>

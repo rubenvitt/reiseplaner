@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui'
+import { StaggerList, StaggerItem, FadeIn } from '@/components/ui/motion'
 
 export function Dashboard() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
@@ -41,38 +42,47 @@ export function Dashboard() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Meine Reisen</h1>
-        <Button onClick={() => setIsCreateDialogOpen(true)}>
+        <Button
+          onClick={() => setIsCreateDialogOpen(true)}
+          data-tour="create-trip"
+        >
           <Plus className="w-5 h-5 mr-2" />
           Neue Reise
         </Button>
       </div>
 
       {trips.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-center">
-          <div className="rounded-full bg-muted p-6 mb-4">
-            <Plus className="h-10 w-10 text-muted-foreground" />
+        <FadeIn direction="up">
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <div className="rounded-full bg-muted p-6 mb-4">
+              <Plus className="h-10 w-10 text-muted-foreground" />
+            </div>
+            <p className="text-lg text-muted-foreground">
+              Noch keine Reisen. Erstelle deine erste Reise!
+            </p>
+            <Button
+              className="mt-4"
+              onClick={() => setIsCreateDialogOpen(true)}
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Erste Reise erstellen
+            </Button>
           </div>
-          <p className="text-lg text-muted-foreground">
-            Noch keine Reisen. Erstelle deine erste Reise!
-          </p>
-          <Button
-            className="mt-4"
-            onClick={() => setIsCreateDialogOpen(true)}
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            Erste Reise erstellen
-          </Button>
-        </div>
+        </FadeIn>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {trips.map((trip) => (
-            <TripCard
+        <StaggerList className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {trips.map((trip, index) => (
+            <StaggerItem
               key={trip.id}
-              trip={trip}
-              onDelete={() => setDeleteConfirmId(trip.id)}
-            />
+              {...(index === 0 && { 'data-tour': 'trip-card' })}
+            >
+              <TripCard
+                trip={trip}
+                onDelete={() => setDeleteConfirmId(trip.id)}
+              />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerList>
       )}
 
       {/* Create Trip Dialog */}
@@ -95,18 +105,18 @@ export function Dashboard() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Reise loeschen</DialogTitle>
+            <DialogTitle>Reise löschen</DialogTitle>
           </DialogHeader>
           <p className="text-muted-foreground">
-            Bist du sicher, dass du die Reise "{tripToDelete?.name}" loeschen
-            moechtest? Diese Aktion kann nicht rueckgaengig gemacht werden.
+            Bist du sicher, dass du die Reise "{tripToDelete?.name}" löschen
+            möchtest? Diese Aktion kann nicht rückgängig gemacht werden.
           </p>
           <div className="flex justify-end gap-3 mt-4">
             <Button variant="outline" onClick={() => setDeleteConfirmId(null)}>
               Abbrechen
             </Button>
             <Button variant="destructive" onClick={handleDeleteTrip}>
-              Loeschen
+              Löschen
             </Button>
           </div>
         </DialogContent>

@@ -122,7 +122,7 @@ export function PackingItemForm({
           Abbrechen
         </Button>
         <Button type="submit" disabled={isSubmitting}>
-          {item ? 'Speichern' : 'Hinzufuegen'}
+          {item ? 'Speichern' : 'Hinzufügen'}
         </Button>
       </div>
     </form>

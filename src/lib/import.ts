@@ -5,6 +5,9 @@ import {
   useAccommodationStore,
   useBudgetStore,
   usePackingStore,
+  useTransportStore,
+  useTasksStore,
+  useDocumentsStore,
 } from '@/stores'
 // Types are only used via Zod schemas, so no direct type imports needed
 
@@ -185,6 +188,117 @@ const PackingListSchema = z.object({
   updatedAt: z.string(),
 })
 
+// Transport Mode Schema
+const TransportModeSchema = z.enum([
+  'car',
+  'train',
+  'flight',
+  'bus',
+  'ferry',
+  'taxi',
+  'walking',
+  'bicycle',
+  'other',
+])
+
+// Transport Location Schema
+const TransportLocationSchema = z.object({
+  destinationId: z.string().optional(),
+  name: z.string(),
+  address: z.string().optional(),
+})
+
+// Transport Details Schema
+const TransportDetailsSchema = z.object({
+  flightNumber: z.string().optional(),
+  airline: z.string().optional(),
+  terminal: z.string().optional(),
+  gate: z.string().optional(),
+  trainNumber: z.string().optional(),
+  carrier: z.string().optional(),
+  wagon: z.string().optional(),
+  seat: z.string().optional(),
+  platform: z.string().optional(),
+  vehicleInfo: z.string().optional(),
+  licensePlate: z.string().optional(),
+}).optional()
+
+// Transport Schema
+const TransportSchema = z.object({
+  id: z.string(),
+  tripId: z.string(),
+  mode: TransportModeSchema,
+  origin: TransportLocationSchema,
+  destination: TransportLocationSchema,
+  departureDate: z.string(),
+  departureTime: z.string().optional(),
+  arrivalDate: z.string(),
+  arrivalTime: z.string().optional(),
+  bookingReference: z.string().optional(),
+  price: z.number().optional(),
+  currency: z.string(),
+  isPaid: z.boolean(),
+  details: TransportDetailsSchema,
+  notes: z.string().optional(),
+})
+
+// Task Status Schema
+const TaskStatusSchema = z.enum(['open', 'completed'])
+
+// Task Priority Schema
+const TaskPrioritySchema = z.enum(['low', 'medium', 'high'])
+
+// Task Category Schema
+const TaskCategorySchema = z.enum([
+  'booking',
+  'documents',
+  'packing',
+  'finance',
+  'health',
+  'other',
+])
+
+// Task Schema
+const TaskSchema = z.object({
+  id: z.string(),
+  tripId: z.string(),
+  title: z.string(),
+  description: z.string().optional(),
+  deadline: z.string().optional(),
+  status: TaskStatusSchema,
+  priority: TaskPrioritySchema,
+  category: TaskCategorySchema,
+  createdAt: z.string(),
+  completedAt: z.string().optional(),
+})
+
+// Document Type Schema
+const DocumentTypeSchema = z.enum(['image', 'pdf', 'other'])
+
+// Document Category Schema
+const DocumentCategorySchema = z.enum([
+  'passport',
+  'visa',
+  'ticket',
+  'booking',
+  'insurance',
+  'other',
+])
+
+// Document Schema
+const TripDocumentSchema = z.object({
+  id: z.string(),
+  tripId: z.string(),
+  name: z.string(),
+  type: DocumentTypeSchema,
+  mimeType: z.string(),
+  size: z.number(),
+  data: z.string(),
+  category: DocumentCategorySchema,
+  notes: z.string().optional(),
+  uploadedAt: z.string(),
+})
+
 // Export Data Schema (main import format)
 const ExportDataSchema = z.object({
   version: z.string(),
@@ -195,6 +309,9 @@ const ExportDataSchema = z.object({
     accommodations: z.array(AccommodationSchema),
     expenses: z.array(ExpenseSchema),
     packingLists: z.array(PackingListSchema),
+    transports: z.array(TransportSchema).optional().default([]),
+    tasks: z.array(TaskSchema).optional().default([]),
+    documents: z.array(TripDocumentSchema).optional().default([]),
   }),
 })
 
@@ -221,6 +338,9 @@ export interface ImportResult {
     packingLists: number
     packingCategories: number
     packingItems: number
+    transports: number
+    tasks: number
+    documents: number
   }
 }
 
@@ -264,7 +384,7 @@ export function importData(
 ): ImportResult {
   try {
     const { merge } = options
-    const { trips, dayPlans, accommodations, expenses, packingLists } = data.data
+    const { trips, dayPlans, accommodations, expenses, packingLists, transports = [], tasks = [], documents = [] } = data.data
 
     // Get store states
     const tripStore = useTripStore.getState()
@@ -272,6 +392,9 @@ export function importData(
     const accommodationStore = useAccommodationStore.getState()
     const budgetStore = useBudgetStore.getState()
     const packingStore = usePackingStore.getState()
+    const transportStore = useTransportStore.getState()
+    const tasksStore = useTasksStore.getState()
+    const documentsStore = useDocumentsStore.getState()
 
     // Count items for result
     let destinationsCount = 0
@@ -301,6 +424,9 @@ export function importData(
       const existingAccommodationIds = new Set(accommodationStore.accommodations.map((a) => a.id))
       const existingExpenseIds = new Set(budgetStore.expenses.map((e) => e.id))
       const existingPackingListIds = new Set(packingStore.packingLists.map((p) => p.id))
+      const existingTransportIds = new Set(transportStore.transports.map((t) => t.id))
+      const existingTaskIds = new Set(tasksStore.tasks.map((t) => t.id))
+      const existingDocumentIds = new Set(documentsStore.documents.map((d) => d.id))
 
       // Filter out duplicates and add new items
       const newTrips = trips.filter((t) => !existingTripIds.has(t.id))
@@ -308,6 +434,9 @@ export function importData(
       const newAccommodations = accommodations.filter((a) => !existingAccommodationIds.has(a.id))
       const newExpenses = expenses.filter((e) => !existingExpenseIds.has(e.id))
       const newPackingLists = packingLists.filter((p) => !existingPackingListIds.has(p.id))
+      const newTransports = transports.filter((t) => !existingTransportIds.has(t.id))
+      const newTasks = tasks.filter((t) => !existingTaskIds.has(t.id))
+      const newDocuments = documents.filter((d) => !existingDocumentIds.has(d.id))
 
       // Update stores with merged data
       useTripStore.setState({
@@ -325,6 +454,15 @@ export function importData(
       usePackingStore.setState({
         packingLists: [...packingStore.packingLists, ...newPackingLists],
       })
+      useTransportStore.setState({
+        transports: [...transportStore.transports, ...newTransports],
+      })
+      useTasksStore.setState({
+        tasks: [...tasksStore.tasks, ...newTasks],
+      })
+      useDocumentsStore.setState({
+        documents: [...documentsStore.documents, ...newDocuments],
+      })
 
       // Update counts to reflect what was actually imported
       const importedTripsCount = newTrips.length
@@ -332,6 +470,9 @@ export function importData(
       const importedAccommodationsCount = newAccommodations.length
       const importedExpensesCount = newExpenses.length
       const importedPackingListsCount = newPackingLists.length
+      const importedTransportsCount = newTransports.length
+      const importedTasksCount = newTasks.length
+      const importedDocumentsCount = newDocuments.length
 
       let importedDestinationsCount = 0
       let importedActivitiesCount = 0
@@ -363,6 +504,9 @@ export function importData(
           packingLists: importedPackingListsCount,
           packingCategories: importedPackingCategoriesCount,
           packingItems: importedPackingItemsCount,
+          transports: importedTransportsCount,
+          tasks: importedTasksCount,
+          documents: importedDocumentsCount,
         },
       }
     } else {
@@ -383,6 +527,15 @@ export function importData(
       usePackingStore.setState({
         packingLists: packingLists,
       })
+      useTransportStore.setState({
+        transports: transports,
+      })
+      useTasksStore.setState({
+        tasks: tasks,
+      })
+      useDocumentsStore.setState({
+        documents: documents,
+      })
 
       return {
         success: true,
@@ -396,6 +549,9 @@ export function importData(
           packingLists: packingLists.length,
           packingCategories: packingCategoriesCount,
           packingItems: packingItemsCount,
+          transports: transports.length,
+          tasks: tasks.length,
+          documents: documents.length,
         },
       }
     }
@@ -442,6 +598,9 @@ export {
   PackingListSchema,
   PackingCategorySchema,
   PackingItemSchema,
+  TransportSchema,
+  TransportModeSchema,
+  TransportLocationSchema,
   ExportDataSchema,
   TripStatusSchema,
   ActivityCategorySchema,

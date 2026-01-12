@@ -1,9 +1,12 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Sidebar } from './Sidebar'
 import { Header } from './Header'
 import { MobileNav } from './MobileNav'
+import { PageTransition } from '@/components/ui/motion'
 
 export function AppLayout() {
+  const location = useLocation()
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Desktop Layout */}
@@ -15,7 +18,9 @@ export function AppLayout() {
         <div className="flex-1 ml-64">
           <Header />
           <main className="p-6">
-            <Outlet />
+            <PageTransition key={location.pathname}>
+              <Outlet />
+            </PageTransition>
           </main>
         </div>
       </div>
@@ -24,7 +29,9 @@ export function AppLayout() {
       <div className="lg:hidden">
         <Header />
         <main className="p-4 pb-20">
-          <Outlet />
+          <PageTransition key={location.pathname}>
+            <Outlet />
+          </PageTransition>
         </main>
         <MobileNav />
       </div>

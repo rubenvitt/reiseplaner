@@ -22,6 +22,8 @@ export interface Destination {
   departureDate: string
   order: number
   notes?: string
+  latitude?: number
+  longitude?: number
 }
 
 export type TripStatus = 'planning' | 'upcoming' | 'ongoing' | 'completed'

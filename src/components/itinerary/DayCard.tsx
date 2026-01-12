@@ -22,9 +22,10 @@ import type { DayPlan, Activity } from '@/types'
 interface DayCardProps {
   dayPlan: DayPlan
   date: string
+  destinationName?: string
 }
 
-export function DayCard({ dayPlan, date }: DayCardProps) {
+export function DayCard({ dayPlan, date, destinationName }: DayCardProps) {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [editingActivity, setEditingActivity] = useState<Activity | null>(null)
 
@@ -52,6 +53,8 @@ export function DayCard({ dayPlan, date }: DayCardProps) {
       cost: data.cost,
       bookingReference: data.bookingReference,
       isCompleted: false,
+      latitude: data.latitude,
+      longitude: data.longitude,
     })
     setIsAddDialogOpen(false)
   }
@@ -67,12 +70,14 @@ export function DayCard({ dayPlan, date }: DayCardProps) {
       category: data.category,
       cost: data.cost,
       bookingReference: data.bookingReference,
+      latitude: data.latitude,
+      longitude: data.longitude,
     })
     setEditingActivity(null)
   }
 
   const handleDeleteActivity = (activityId: string) => {
-    if (confirm('Moechten Sie diese Aktivitaet wirklich loeschen?')) {
+    if (confirm('Möchten Sie diese Aktivität wirklich löschen?')) {
       deleteActivity(dayPlan.id, activityId)
     }
   }
@@ -84,7 +89,14 @@ export function DayCard({ dayPlan, date }: DayCardProps) {
   return (
     <Card className="min-w-0">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base capitalize">{formattedDate}</CardTitle>
+        <div className="flex items-center justify-between gap-2">
+          <CardTitle className="text-base capitalize">{formattedDate}</CardTitle>
+          {destinationName && (
+            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+              {destinationName}
+            </span>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="space-y-2">
         <SortableContext
@@ -93,7 +105,7 @@ export function DayCard({ dayPlan, date }: DayCardProps) {
         >
           {sortedActivities.length === 0 ? (
             <p className="py-4 text-center text-sm text-muted-foreground">
-              Noch keine Aktivitaeten geplant
+              Noch keine Aktivitäten geplant
             </p>
           ) : (
             sortedActivities.map((activity) => (
@@ -115,14 +127,14 @@ export function DayCard({ dayPlan, date }: DayCardProps) {
           onClick={() => setIsAddDialogOpen(true)}
         >
           <Plus className="mr-2 h-4 w-4" />
-          Aktivitaet hinzufuegen
+          Aktivität hinzufügen
         </Button>
 
         {/* Add Activity Dialog */}
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Neue Aktivitaet</DialogTitle>
+              <DialogTitle>Neue Aktivität</DialogTitle>
             </DialogHeader>
             <ActivityForm
               onSubmit={handleAddActivity}
@@ -138,7 +150,7 @@ export function DayCard({ dayPlan, date }: DayCardProps) {
         >
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Aktivitaet bearbeiten</DialogTitle>
+              <DialogTitle>Aktivität bearbeiten</DialogTitle>
             </DialogHeader>
             {editingActivity && (
               <ActivityForm

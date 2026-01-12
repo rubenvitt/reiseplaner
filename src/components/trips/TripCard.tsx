@@ -3,6 +3,7 @@ import { Calendar, MapPin, Wallet, Pencil, Trash2 } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { ScaleIn } from '@/components/ui/motion'
 import { formatDate, formatCurrency } from '@/lib/utils'
 import type { Trip, TripStatus } from '@/types'
 
@@ -10,6 +11,7 @@ interface TripCardProps {
   trip: Trip
   onEdit?: () => void
   onDelete?: () => void
+  'data-tour'?: string
 }
 
 const statusConfig: Record<TripStatus, { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
@@ -24,7 +26,7 @@ function truncateText(text: string, maxLength: number): string {
   return text.slice(0, maxLength).trim() + '...'
 }
 
-export function TripCard({ trip, onEdit, onDelete }: TripCardProps) {
+export function TripCard({ trip, onEdit, onDelete, 'data-tour': dataTour }: TripCardProps) {
   const statusInfo = statusConfig[trip.status]
   const hasActions = onEdit || onDelete
 
@@ -41,8 +43,8 @@ export function TripCard({ trip, onEdit, onDelete }: TripCardProps) {
   }
 
   return (
-    <Link to={`/trip/${trip.id}`}>
-      <Card className="h-full cursor-pointer transition-shadow hover:shadow-lg">
+    <Link to={`/trip/${trip.id}`} data-tour={dataTour}>
+      <Card className="h-full cursor-pointer">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-2">
             <CardTitle className="line-clamp-1 text-lg">{trip.name}</CardTitle>
@@ -76,30 +78,32 @@ export function TripCard({ trip, onEdit, onDelete }: TripCardProps) {
           </div>
 
           {hasActions && (
-            <div className="flex items-center gap-2 pt-2">
-              {onEdit && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleEdit}
-                  className="flex-1"
-                >
-                  <Pencil className="mr-2 h-4 w-4" />
-                  Bearbeiten
-                </Button>
-              )}
-              {onDelete && (
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={handleDelete}
-                  className="flex-1"
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Löschen
-                </Button>
-              )}
-            </div>
+            <ScaleIn delay={0.1}>
+              <div className="flex items-center gap-2 pt-2">
+                {onEdit && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleEdit}
+                    className="flex-1"
+                  >
+                    <Pencil className="mr-2 h-4 w-4" />
+                    Bearbeiten
+                  </Button>
+                )}
+                {onDelete && (
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    onClick={handleDelete}
+                    className="flex-1"
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Löschen
+                  </Button>
+                )}
+              </div>
+            </ScaleIn>
           )}
         </CardContent>
       </Card>

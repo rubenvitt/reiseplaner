@@ -46,20 +46,24 @@ export function PackingList({ tripId }: PackingListProps) {
 
   const [dialogMode, setDialogMode] = useState<DialogMode>({ type: 'none' })
 
-  // Hole oder erstelle PackingList fuer diese Reise
+  // Hole oder erstelle PackingList für diese Reise
   const packingLists = getPackingListsByTrip(tripId)
-  const [listId, setListId] = useState<string | null>(null)
+
+  // Berechne listId synchron statt in einem Effect
+  const listId = useMemo(() => {
+    if (packingLists.length === 0) {
+      return null
+    }
+    return packingLists[0].id
+  }, [packingLists])
 
   // Erstelle automatisch eine leere Liste falls keine existiert
   useEffect(() => {
     if (packingLists.length === 0) {
-      const newListId = addPackingList({
+      addPackingList({
         tripId,
         name: 'Packliste',
       })
-      setListId(newListId)
-    } else {
-      setListId(packingLists[0].id)
     }
   }, [tripId, packingLists.length, addPackingList])
 
@@ -73,6 +77,7 @@ export function PackingList({ tripId }: PackingListProps) {
     const { packed, total } = getPackedItemsCount(listId)
     const percentage = total > 0 ? Math.round((packed / total) * 100) : 0
     return { packed, total, percentage }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- currentList triggers recalc when items change
   }, [listId, getPackedItemsCount, currentList])
 
   const sortedCategories = useMemo(() => {
@@ -136,14 +141,14 @@ export function PackingList({ tripId }: PackingListProps) {
   const handleSelectTemplate = (template: PackingTemplate) => {
     if (!listId) return
 
-    // Fuer jede Kategorie im Template
+    // Für jede Kategorie im Template
     template.categories.forEach((templateCategory) => {
       const categoryId = addCategory(listId, {
         name: templateCategory.name,
         icon: templateCategory.icon,
       })
 
-      // Fuer jedes Item in der Kategorie
+      // Für jedes Item in der Kategorie
       templateCategory.items.forEach((templateItem) => {
         addItem(listId, categoryId, {
           name: templateItem.name,
@@ -220,7 +225,7 @@ export function PackingList({ tripId }: PackingListProps) {
       <div className="flex flex-wrap gap-2">
         <Button onClick={() => setDialogMode({ type: 'createCategory' })}>
           <Plus className="mr-2 h-4 w-4" />
-          Kategorie hinzufuegen
+          Kategorie hinzufügen
         </Button>
         <Button
           variant="outline"
@@ -237,7 +242,7 @@ export function PackingList({ tripId }: PackingListProps) {
           <FileText className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
           <h3 className="text-lg font-semibold mb-2">Noch keine Kategorien</h3>
           <p className="text-sm text-muted-foreground mb-4">
-            Fuege deine erste Kategorie hinzu oder starte mit einer Vorlage.
+            Füge deine erste Kategorie hinzu oder starte mit einer Vorlage.
           </p>
           <div className="flex justify-center gap-2">
             <Button
@@ -280,7 +285,7 @@ export function PackingList({ tripId }: PackingListProps) {
         </div>
       )}
 
-      {/* Dialog fuer Kategorie erstellen */}
+      {/* Dialog für Kategorie erstellen */}
       <Dialog
         open={dialogMode.type === 'createCategory'}
         onOpenChange={(open) => !open && closeDialog()}
@@ -289,7 +294,7 @@ export function PackingList({ tripId }: PackingListProps) {
           <DialogHeader>
             <DialogTitle>Neue Kategorie erstellen</DialogTitle>
             <DialogDescription>
-              Erstelle eine neue Kategorie fuer deine Packliste.
+              Erstelle eine neue Kategorie für deine Packliste.
             </DialogDescription>
           </DialogHeader>
           <PackingCategoryForm
@@ -299,7 +304,7 @@ export function PackingList({ tripId }: PackingListProps) {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog fuer Kategorie bearbeiten */}
+      {/* Dialog für Kategorie bearbeiten */}
       <Dialog
         open={dialogMode.type === 'editCategory'}
         onOpenChange={(open) => !open && closeDialog()}
@@ -308,7 +313,7 @@ export function PackingList({ tripId }: PackingListProps) {
           <DialogHeader>
             <DialogTitle>Kategorie bearbeiten</DialogTitle>
             <DialogDescription>
-              Aendere den Namen oder das Icon der Kategorie.
+              Ändere den Namen oder das Icon der Kategorie.
             </DialogDescription>
           </DialogHeader>
           {dialogMode.type === 'editCategory' && (
@@ -321,23 +326,23 @@ export function PackingList({ tripId }: PackingListProps) {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog fuer Item erstellen */}
+      {/* Dialog für Item erstellen */}
       <Dialog
         open={dialogMode.type === 'createItem'}
         onOpenChange={(open) => !open && closeDialog()}
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Neues Item hinzufuegen</DialogTitle>
+            <DialogTitle>Neues Item hinzufügen</DialogTitle>
             <DialogDescription>
-              Fuege ein neues Item zur Kategorie hinzu.
+              Füge ein neues Item zur Kategorie hinzu.
             </DialogDescription>
           </DialogHeader>
           <PackingItemForm onSubmit={handleCreateItem} onCancel={closeDialog} />
         </DialogContent>
       </Dialog>
 
-      {/* Dialog fuer Item bearbeiten */}
+      {/* Dialog für Item bearbeiten */}
       <Dialog
         open={dialogMode.type === 'editItem'}
         onOpenChange={(open) => !open && closeDialog()}
@@ -346,7 +351,7 @@ export function PackingList({ tripId }: PackingListProps) {
           <DialogHeader>
             <DialogTitle>Item bearbeiten</DialogTitle>
             <DialogDescription>
-              Aendere die Details dieses Items.
+              Ändere die Details dieses Items.
             </DialogDescription>
           </DialogHeader>
           {dialogMode.type === 'editItem' && (
@@ -359,16 +364,16 @@ export function PackingList({ tripId }: PackingListProps) {
         </DialogContent>
       </Dialog>
 
-      {/* Dialog fuer Templates */}
+      {/* Dialog für Templates */}
       <Dialog
         open={dialogMode.type === 'templates'}
         onOpenChange={(open) => !open && closeDialog()}
       >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Vorlage auswaehlen</DialogTitle>
+            <DialogTitle>Vorlage auswählen</DialogTitle>
             <DialogDescription>
-              Waehle eine Vorlage, um deine Packliste schnell zu befuellen.
+              Wähle eine Vorlage, um deine Packliste schnell zu befüllen.
             </DialogDescription>
           </DialogHeader>
           <PackingTemplates

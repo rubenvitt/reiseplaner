@@ -24,6 +24,7 @@ import type { Accommodation, AccommodationType } from '@/types'
 
 interface AccommodationCardProps {
   accommodation: Accommodation
+  destinationName?: string
   onEdit?: () => void
   onDelete?: () => void
   onTogglePaid?: () => void
@@ -40,6 +41,7 @@ const accommodationTypeLabels: Record<AccommodationType, string> = {
 
 export function AccommodationCard({
   accommodation,
+  destinationName,
   onEdit,
   onDelete,
   onTogglePaid,
@@ -65,8 +67,11 @@ export function AccommodationCard({
             <Building2 className="h-5 w-5 text-muted-foreground" />
             <CardTitle className="text-lg">{name}</CardTitle>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="secondary">{accommodationTypeLabels[type]}</Badge>
+            {destinationName && (
+              <Badge variant="outline">{destinationName}</Badge>
+            )}
             <Badge
               className={
                 isPaid

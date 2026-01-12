@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 @theme {
   --color-background: oklch(1 0 0);
@@ -29,5 +30,28 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Dark Mode */
+  .dark {
+    --color-background: oklch(0.145 0.039 264.7);
+    --color-foreground: oklch(0.984 0.003 264.5);
+    --color-card: oklch(0.205 0.042 265.8);
+    --color-card-foreground: oklch(0.984 0.003 264.5);
+    --color-popover: oklch(0.205 0.042 265.8);
+    --color-popover-foreground: oklch(0.984 0.003 264.5);
+    --color-primary: oklch(0.623 0.214 264.1);
+    --color-primary-foreground: oklch(0.145 0.039 264.7);
+    --color-secondary: oklch(0.269 0.042 265.8);
+    --color-secondary-foreground: oklch(0.984 0.003 264.5);
+    --color-muted: oklch(0.269 0.042 265.8);
+    --color-muted-foreground: oklch(0.708 0.022 264.4);
+    --color-accent: oklch(0.269 0.042 265.8);
+    --color-accent-foreground: oklch(0.984 0.003 264.5);
+    --color-destructive: oklch(0.577 0.245 27.3);
+    --color-destructive-foreground: oklch(0.984 0.003 264.5);
+    --color-border: oklch(0.369 0.042 265.8);
+    --color-input: oklch(0.369 0.042 265.8);
+    --color-ring: oklch(0.623 0.214 264.1);
   }
 }

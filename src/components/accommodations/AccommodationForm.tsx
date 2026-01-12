@@ -1,9 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
+import { MapPin, Loader2 } from 'lucide-react'
 import { Button, Input, Checkbox } from '@/components/ui'
+import { geocodeAddress } from '@/services/geocoding'
 import type { Accommodation, AccommodationType } from '@/types'
 import { cn } from '@/lib/utils'
+import { useTripStore } from '@/stores'
 
 const ACCOMMODATION_TYPES: { value: AccommodationType; label: string }[] = [
   { value: 'hotel', label: 'Hotel' },
@@ -24,6 +28,7 @@ const CURRENCIES = [
 export interface AccommodationFormData {
   name: string
   type: AccommodationType
+  destinationId?: string
   address: string
   checkIn: string
   checkOut: string
@@ -35,6 +40,8 @@ export interface AccommodationFormData {
   website?: string
   notes?: string
   isPaid: boolean
+  latitude?: number
+  longitude?: number
 }
 
 export interface AccommodationFormProps {
@@ -48,8 +55,15 @@ export function AccommodationForm({
   accommodation,
   onSubmit,
   onCancel,
+  tripId,
 }: AccommodationFormProps) {
   const isEditMode = Boolean(accommodation)
+  const [isGeocoding, setIsGeocoding] = useState(false)
+
+  // Lade Trip für Destinations
+  const getTrip = useTripStore((state) => state.getTrip)
+  const trip = getTrip(tripId)
+  const destinations = trip?.destinations ?? []
 
   const {
     register,
@@ -61,6 +75,7 @@ export function AccommodationForm({
     defaultValues: {
       name: accommodation?.name ?? '',
       type: accommodation?.type ?? 'hotel',
+      destinationId: accommodation?.destinationId ?? '',
       address: accommodation?.address ?? '',
       checkIn: accommodation?.checkIn ?? '',
       checkOut: accommodation?.checkOut ?? '',
@@ -77,14 +92,39 @@ export function AccommodationForm({
 
   const checkIn = watch('checkIn')
 
-  const handleFormSubmit = (data: AccommodationFormData) => {
+  const handleFormSubmit = async (data: AccommodationFormData) => {
+    let latitude = accommodation?.latitude
+    let longitude = accommodation?.longitude
+
+    // Geocode wenn Adresse sich geaendert hat oder noch keine Koordinaten vorhanden sind
+    const addressChanged = data.address !== accommodation?.address
+    const needsGeocoding = !latitude || !longitude || addressChanged
+
+    if (needsGeocoding && data.address) {
+      setIsGeocoding(true)
+      try {
+        const coords = await geocodeAddress(data.address)
+        if (coords) {
+          latitude = coords.lat
+          longitude = coords.lng
+        }
+      } catch (error) {
+        console.error('Geocoding failed:', error)
+      } finally {
+        setIsGeocoding(false)
+      }
+    }
+
     const cleanedData: AccommodationFormData = {
       ...data,
+      destinationId: data.destinationId || undefined,
       confirmationNumber: data.confirmationNumber || undefined,
       phone: data.phone || undefined,
       email: data.email || undefined,
       website: data.website || undefined,
       notes: data.notes || undefined,
+      latitude,
+      longitude,
     }
     onSubmit(cleanedData)
   }
@@ -125,6 +165,27 @@ export function AccommodationForm({
         </select>
       </div>
 
+      {/* Destination */}
+      {destinations.length > 0 && (
+        <div className="space-y-2">
+          <label htmlFor="destinationId" className="text-sm font-medium">
+            Reiseziel
+          </label>
+          <select
+            id="destinationId"
+            {...register('destinationId')}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <option value="">Kein Reiseziel</option>
+            {destinations.map((destination) => (
+              <option key={destination.id} value={destination.id}>
+                {destination.name}, {destination.country}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       {/* Address */}
       <div className="space-y-2">
         <label htmlFor="address" className="text-sm font-medium">
@@ -132,7 +193,7 @@ export function AccommodationForm({
         </label>
         <Input
           id="address"
-          placeholder="Strasse, PLZ Ort, Land"
+          placeholder="Straße, PLZ Ort, Land"
           {...register('address', { required: 'Adresse ist erforderlich' })}
           className={cn(errors.address && 'border-destructive')}
         />
@@ -208,7 +269,7 @@ export function AccommodationForm({
 
         <div className="space-y-2">
           <label htmlFor="currency" className="text-sm font-medium">
-            Waehrung
+            Währung
           </label>
           <select
             id="currency"
@@ -286,7 +347,7 @@ export function AccommodationForm({
         </label>
         <textarea
           id="notes"
-          placeholder="Zusaetzliche Informationen..."
+          placeholder="Zusätzliche Informationen..."
           rows={3}
           {...register('notes')}
           className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
@@ -316,8 +377,18 @@ export function AccommodationForm({
         <Button type="button" variant="outline" onClick={onCancel}>
           Abbrechen
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
-          {isEditMode ? 'Speichern' : 'Unterkunft erstellen'}
+        <Button type="submit" disabled={isSubmitting || isGeocoding}>
+          {isGeocoding ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Suche Koordinaten...
+            </>
+          ) : (
+            <>
+              <MapPin className="w-4 h-4 mr-2" />
+              {isEditMode ? 'Speichern' : 'Unterkunft erstellen'}
+            </>
+          )}
         </Button>
       </div>
     </form>

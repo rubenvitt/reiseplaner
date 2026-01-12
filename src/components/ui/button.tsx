@@ -1,5 +1,8 @@
+'use client'
+
 import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { motion, type HTMLMotionProps } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
@@ -32,20 +35,122 @@ const buttonVariants = cva(
   }
 )
 
+// Ripple-Effekt Komponente
+interface RippleProps {
+  x: number
+  y: number
+  size: number
+}
+
+const Ripple = React.memo(({ x, y, size }: RippleProps) => (
+  <motion.span
+    className="absolute rounded-full bg-white/30 pointer-events-none"
+    style={{
+      left: x - size / 2,
+      top: y - size / 2,
+      width: size,
+      height: size,
+    }}
+    initial={{ scale: 0, opacity: 0.5 }}
+    animate={{ scale: 2, opacity: 0 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.5, ease: 'easeOut' }}
+  />
+))
+Ripple.displayName = 'Ripple'
+
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<HTMLMotionProps<'button'>, 'children'>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  animated?: boolean
+  enableRipple?: boolean
+  children?: React.ReactNode
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      animated = true,
+      enableRipple = false,
+      children,
+      onClick,
+      ...props
+    },
+    ref
+  ) => {
+    const [ripples, setRipples] = React.useState<
+      Array<{ id: number; x: number; y: number; size: number }>
+    >([])
+    const rippleIdRef = React.useRef(0)
+
+    const handleClick = React.useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (enableRipple && animated) {
+          const button = event.currentTarget
+          const rect = button.getBoundingClientRect()
+          const x = event.clientX - rect.left
+          const y = event.clientY - rect.top
+          const size = Math.max(rect.width, rect.height)
+
+          const newRipple = {
+            id: rippleIdRef.current++,
+            x,
+            y,
+            size,
+          }
+
+          setRipples((prev) => [...prev, newRipple])
+
+          // Ripple nach Animation entfernen
+          setTimeout(() => {
+            setRipples((prev) => prev.filter((r) => r.id !== newRipple.id))
+          }, 500)
+        }
+
+        onClick?.(event)
+      },
+      [enableRipple, animated, onClick]
+    )
+
+    // Animation-Varianten
+    const motionProps = animated
+      ? {
+          whileHover: { scale: 1.02 },
+          whileTap: { scale: 0.98 },
+          transition: {
+            type: 'spring' as const,
+            stiffness: 400,
+            damping: 17,
+          },
+        }
+      : {}
+
     return (
-      <button
-        className={cn(buttonVariants({ variant, size, className }))}
+      <motion.button
+        className={cn(
+          buttonVariants({ variant, size, className }),
+          enableRipple && 'relative overflow-hidden'
+        )}
         ref={ref}
+        onClick={handleClick}
+        {...motionProps}
         {...props}
-      />
+      >
+        {children}
+        {enableRipple &&
+          ripples.map((ripple) => (
+            <Ripple
+              key={ripple.id}
+              x={ripple.x}
+              y={ripple.y}
+              size={ripple.size}
+            />
+          ))}
+      </motion.button>
     )
   }
 )

@@ -19,3 +19,5 @@ export {
   DialogDescription,
 } from './dialog'
 export { Checkbox, type CheckboxProps } from './checkbox'
+export { ThemeToggle } from './ThemeToggle'
+export { Toast, ToastContainer } from './toast'

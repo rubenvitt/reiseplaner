@@ -13,8 +13,8 @@ export function PackingPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center text-gray-500">
           <p>Reise nicht gefunden.</p>
-          <Link to="/trips" className="text-primary hover:underline">
-            Zurueck zur Uebersicht
+          <Link to="/" className="text-primary hover:underline">
+            Zurück zur Übersicht
           </Link>
         </div>
       </div>
@@ -29,7 +29,7 @@ export function PackingPage() {
           to={`/trip/${tripId}`}
           className="text-primary hover:underline text-sm"
         >
-          ← Zurueck zur Reise
+          ← Zurück zur Reise
         </Link>
       </div>
 

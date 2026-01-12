@@ -1,12 +1,32 @@
-import { useParams } from 'react-router-dom';
-import { useTripStore } from '@/stores';
+import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { Plus, MapPin } from 'lucide-react'
+import { useTripStore } from '@/stores'
+import { DestinationCard, DestinationForm } from '@/components/destinations'
+import type { DestinationFormData } from '@/components/destinations'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import type { Destination } from '@/types'
 
 export function TripOverview() {
-  const { tripId } = useParams<{ tripId: string }>();
-  const trip = useTripStore((state) => state.getTrip(tripId || ''));
+  const { tripId } = useParams<{ tripId: string }>()
+  const trip = useTripStore((state) => state.getTrip(tripId || ''))
+  const addDestination = useTripStore((state) => state.addDestination)
+  const updateDestination = useTripStore((state) => state.updateDestination)
+  const deleteDestination = useTripStore((state) => state.deleteDestination)
+
+  // Dialog states
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [editingDestination, setEditingDestination] = useState<Destination | null>(null)
+  const [deletingDestination, setDeletingDestination] = useState<Destination | null>(null)
 
   if (!trip) {
-    return null;
+    return null
   }
 
   const formatDate = (dateString: string) => {
@@ -14,14 +34,53 @@ export function TripOverview() {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
-    });
-  };
+    })
+  }
+
+  // Handlers
+  const handleAddDestination = (data: DestinationFormData) => {
+    if (!tripId) return
+
+    addDestination(tripId, {
+      name: data.name,
+      country: data.country,
+      arrivalDate: data.arrivalDate,
+      departureDate: data.departureDate,
+      notes: data.notes,
+      latitude: data.latitude,
+      longitude: data.longitude,
+    })
+    setIsAddDialogOpen(false)
+  }
+
+  const handleEditDestination = (data: DestinationFormData) => {
+    if (!tripId || !editingDestination) return
+
+    updateDestination(tripId, editingDestination.id, {
+      name: data.name,
+      country: data.country,
+      arrivalDate: data.arrivalDate,
+      departureDate: data.departureDate,
+      notes: data.notes,
+      latitude: data.latitude,
+      longitude: data.longitude,
+    })
+    setEditingDestination(null)
+  }
+
+  const handleConfirmDelete = () => {
+    if (!tripId || !deletingDestination) return
+    deleteDestination(tripId, deletingDestination.id)
+    setDeletingDestination(null)
+  }
+
+  const sortedDestinations = [...trip.destinations].sort((a, b) => a.order - b.order)
 
   return (
     <div className="space-y-6">
       {/* Trip Info Card */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold mb-4">Reiseubersicht</h2>
+        <h2 className="text-xl font-semibold mb-4">Reiseübersicht</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -42,38 +101,106 @@ export function TripOverview() {
 
       {/* Destinations */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold mb-4">Reiseziele</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold">Reiseziele</h2>
+          <Button size="sm" onClick={() => setIsAddDialogOpen(true)}>
+            <Plus className="mr-1 h-4 w-4" />
+            Reiseziel hinzufügen
+          </Button>
+        </div>
 
-        {trip.destinations.length === 0 ? (
-          <p className="text-gray-500">
-            Noch keine Reiseziele hinzugefugt.
-          </p>
+        {sortedDestinations.length === 0 ? (
+          <div className="text-center py-8">
+            <MapPin className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+            <p className="text-lg font-medium text-gray-500 mb-2">
+              Keine Reiseziele vorhanden
+            </p>
+            <p className="text-gray-400 mb-4">
+              Füge dein erstes Reiseziel für diese Reise hinzu.
+            </p>
+            <Button onClick={() => setIsAddDialogOpen(true)}>
+              <Plus className="mr-2 h-4 w-4" />
+              Reiseziel hinzufügen
+            </Button>
+          </div>
         ) : (
-          <div className="space-y-3">
-            {trip.destinations
-              .sort((a, b) => a.order - b.order)
-              .map((destination, index) => (
-                <div
-                  key={destination.id}
-                  className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg"
-                >
-                  <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full font-medium">
-                    {index + 1}
-                  </span>
-                  <div className="flex-grow">
-                    <p className="font-medium text-gray-900">{destination.name}</p>
-                    {destination.country && (
-                      <p className="text-sm text-gray-500">{destination.country}</p>
-                    )}
-                  </div>
-                  <div className="text-right text-sm text-gray-500">
-                    {formatDate(destination.arrivalDate)} - {formatDate(destination.departureDate)}
-                  </div>
-                </div>
-              ))}
+          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+            {sortedDestinations.map((destination, index) => (
+              <DestinationCard
+                key={destination.id}
+                destination={destination}
+                index={index}
+                onEdit={() => setEditingDestination(destination)}
+                onDelete={() => setDeletingDestination(destination)}
+              />
+            ))}
           </div>
         )}
       </div>
+
+      {/* Add Dialog */}
+      <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Neues Reiseziel</DialogTitle>
+          </DialogHeader>
+          <DestinationForm
+            onSubmit={handleAddDestination}
+            onCancel={() => setIsAddDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Dialog */}
+      <Dialog
+        open={editingDestination !== null}
+        onOpenChange={(open) => !open && setEditingDestination(null)}
+      >
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Reiseziel bearbeiten</DialogTitle>
+          </DialogHeader>
+          {editingDestination && (
+            <DestinationForm
+              destination={editingDestination}
+              onSubmit={handleEditDestination}
+              onCancel={() => setEditingDestination(null)}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deletingDestination !== null}
+        onOpenChange={(open) => !open && setDeletingDestination(null)}
+      >
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Reiseziel löschen</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-muted-foreground">
+              Möchtest du das Reiseziel "{deletingDestination?.name}" wirklich löschen?
+              Diese Aktion kann nicht rückgängig gemacht werden.
+            </p>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setDeletingDestination(null)}
+            >
+              Abbrechen
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleConfirmDelete}
+            >
+              Löschen
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
-  );
+  )
 }
