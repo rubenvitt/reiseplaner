@@ -218,20 +218,20 @@ export function TripMap({
       </MapContainer>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 z-[1000] bg-white rounded-lg shadow-lg p-3">
-        <h4 className="text-xs font-semibold text-gray-700 mb-2">Legende</h4>
+      <div className="absolute bottom-4 left-4 z-[1000] bg-card rounded-lg shadow-lg p-3 border border-border">
+        <h4 className="text-xs font-semibold text-foreground mb-2">Legende</h4>
         <div className="space-y-1.5">
           <div className="flex items-center gap-2 text-xs">
-            <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow" />
-            <span className="text-gray-600">Reiseziele</span>
+            <div className="w-4 h-4 rounded-full bg-blue-500 border-2 border-card shadow" />
+            <span className="text-muted-foreground">Reiseziele</span>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <div className="w-4 h-4 rounded-full bg-purple-500 border-2 border-white shadow" />
-            <span className="text-gray-600">Unterkuenfte</span>
+            <div className="w-4 h-4 rounded-full bg-purple-500 border-2 border-card shadow" />
+            <span className="text-muted-foreground">Unterkuenfte</span>
           </div>
           <div className="flex items-center gap-2 text-xs">
-            <div className="w-4 h-4 rounded-full bg-amber-500 border-2 border-white shadow" />
-            <span className="text-gray-600">Aktivitaeten</span>
+            <div className="w-4 h-4 rounded-full bg-amber-500 border-2 border-card shadow" />
+            <span className="text-muted-foreground">Aktivitaeten</span>
           </div>
         </div>
       </div>

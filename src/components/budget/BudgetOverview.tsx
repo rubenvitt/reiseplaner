@@ -25,14 +25,14 @@ const CATEGORY_LABELS: Record<ExpenseCategory, string> = {
 }
 
 const CATEGORY_COLORS: Record<ExpenseCategory, string> = {
-  accommodation: 'bg-blue-500',
-  transport: 'bg-cyan-500',
-  food: 'bg-orange-500',
-  activities: 'bg-green-500',
-  shopping: 'bg-pink-500',
-  insurance: 'bg-purple-500',
-  visa: 'bg-yellow-500',
-  other: 'bg-gray-500',
+  accommodation: 'bg-blue-500 dark:bg-blue-600',
+  transport: 'bg-cyan-500 dark:bg-cyan-600',
+  food: 'bg-orange-500 dark:bg-orange-600',
+  activities: 'bg-green-500 dark:bg-green-600',
+  shopping: 'bg-pink-500 dark:bg-pink-600',
+  insurance: 'bg-purple-500 dark:bg-purple-600',
+  visa: 'bg-yellow-500 dark:bg-yellow-600',
+  other: 'bg-muted-foreground',
 }
 
 const ALL_CATEGORIES: ExpenseCategory[] = [
@@ -47,9 +47,9 @@ const ALL_CATEGORIES: ExpenseCategory[] = [
 ]
 
 function getProgressColor(percentage: number): string {
-  if (percentage < 50) return 'bg-green-500'
-  if (percentage <= 80) return 'bg-yellow-500'
-  return 'bg-red-500'
+  if (percentage < 50) return 'bg-green-500 dark:bg-green-600'
+  if (percentage <= 80) return 'bg-yellow-500 dark:bg-yellow-600'
+  return 'bg-red-500 dark:bg-red-600'
 }
 
 export function BudgetOverview({ tripId, totalBudget, currency }: BudgetOverviewProps) {
@@ -95,7 +95,7 @@ export function BudgetOverview({ tripId, totalBudget, currency }: BudgetOverview
                 <TrendingDown className="h-3 w-3" />
                 Ausgegeben
               </p>
-              <p className="text-lg font-semibold text-red-600">
+              <p className="text-lg font-semibold text-red-600 dark:text-red-400">
                 {formatCurrency(totalSpent, currency)}
               </p>
             </div>
@@ -104,7 +104,7 @@ export function BudgetOverview({ tripId, totalBudget, currency }: BudgetOverview
                 <TrendingUp className="h-3 w-3" />
                 Verbleibend
               </p>
-              <p className={`text-lg font-semibold ${remaining >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <p className={`text-lg font-semibold ${remaining >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                 {formatCurrency(remaining, currency)}
               </p>
             </div>

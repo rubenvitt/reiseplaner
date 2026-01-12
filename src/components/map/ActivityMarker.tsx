@@ -94,23 +94,23 @@ export function ActivityMarker({ activity, onClick }: ActivityMarkerProps) {
               className="w-3 h-3 rounded-full"
               style={{ backgroundColor: config.color }}
             />
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-muted-foreground">
               {categoryLabels[category]}
             </span>
           </div>
-          <h3 className="font-semibold text-gray-900">{title}</h3>
+          <h3 className="font-semibold text-foreground">{title}</h3>
           {(startTime || endTime) && (
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               {startTime && <span>{startTime}</span>}
               {startTime && endTime && <span> - </span>}
               {endTime && <span>{endTime}</span>}
             </p>
           )}
           {location && (
-            <p className="text-xs text-gray-500 mt-1">{location}</p>
+            <p className="text-xs text-muted-foreground mt-1">{location}</p>
           )}
           {activity.description && (
-            <p className="mt-2 text-xs text-gray-600 border-t pt-2">
+            <p className="mt-2 text-xs text-muted-foreground border-t border-border pt-2">
               {activity.description}
             </p>
           )}

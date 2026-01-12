@@ -48,7 +48,7 @@ export function DestinationCard({
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-3">
-            <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full font-medium">
+            <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 rounded-full font-medium">
               {index + 1}
             </span>
             <div>

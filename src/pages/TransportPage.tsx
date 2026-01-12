@@ -151,8 +151,8 @@ export function TransportPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Reise nicht gefunden</h1>
-          <Link to="/" className="text-blue-600 hover:underline">
+          <h1 className="text-2xl font-bold text-foreground mb-4">Reise nicht gefunden</h1>
+          <Link to="/" className="text-primary hover:underline">
             Zur Startseite
           </Link>
         </div>
@@ -164,7 +164,7 @@ export function TransportPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-gray-900">
+        <h2 className="text-xl font-semibold text-foreground">
           Transport
         </h2>
         <Button onClick={() => setIsAddDialogOpen(true)}>
@@ -175,9 +175,9 @@ export function TransportPage() {
 
       {/* Transport List or Empty State */}
       {transports.length === 0 ? (
-        <div className="bg-white rounded-lg shadow p-8">
-          <div className="text-center text-gray-500">
-            <Route className="w-16 h-16 mx-auto mb-4 text-gray-300" />
+        <div className="bg-card rounded-lg shadow p-8">
+          <div className="text-center text-muted-foreground">
+            <Route className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
             <p className="text-lg font-medium mb-2">Keine Transporte vorhanden</p>
             <p className="mb-4">Füge deine erste Fahrt oder Flug für diese Reise hinzu.</p>
             <Button onClick={() => setIsAddDialogOpen(true)}>

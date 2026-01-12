@@ -131,18 +131,18 @@ export function MapMarker({ location, isSelected, onClick }: MapMarkerProps) {
                 className="w-3 h-3 rounded-full flex-shrink-0"
                 style={{ backgroundColor: color }}
               />
-              <span className="text-xs text-gray-500">{typeLabels[location.type]}</span>
+              <span className="text-xs text-muted-foreground">{typeLabels[location.type]}</span>
             </div>
-            <h3 className="font-semibold text-gray-900 text-sm">{location.name}</h3>
+            <h3 className="font-semibold text-foreground text-sm">{location.name}</h3>
             {location.address && (
-              <p className="text-xs text-gray-600 mt-1">{location.address}</p>
+              <p className="text-xs text-muted-foreground mt-1">{location.address}</p>
             )}
             {location.details && (
-              <div className="mt-2 pt-2 border-t border-gray-100">
+              <div className="mt-2 pt-2 border-t border-border">
                 {Object.entries(location.details).map(([key, value]) => (
                   <div key={key} className="flex justify-between text-xs">
-                    <span className="text-gray-500 capitalize">{key}:</span>
-                    <span className="text-gray-700">{String(value)}</span>
+                    <span className="text-muted-foreground capitalize">{key}:</span>
+                    <span className="text-foreground">{String(value)}</span>
                   </div>
                 ))}
               </div>

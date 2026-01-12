@@ -81,13 +81,13 @@ export function AccommodationMarker({
       <Popup>
         <div className="min-w-[200px]">
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-700 rounded">
+            <span className="px-2 py-0.5 text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded">
               {typeLabels[type]}
             </span>
           </div>
-          <h3 className="font-semibold text-gray-900">{name}</h3>
-          <p className="text-xs text-gray-500 mt-1">{address}</p>
-          <div className="mt-2 text-xs text-gray-600 space-y-1">
+          <h3 className="font-semibold text-foreground">{name}</h3>
+          <p className="text-xs text-muted-foreground mt-1">{address}</p>
+          <div className="mt-2 text-xs text-muted-foreground space-y-1">
             <p>
               <span className="font-medium">Check-in:</span> {formatDate(checkIn)}
             </p>
@@ -96,7 +96,7 @@ export function AccommodationMarker({
             </p>
           </div>
           {confirmationNumber && (
-            <p className="mt-2 text-xs text-gray-500 border-t pt-2">
+            <p className="mt-2 text-xs text-muted-foreground border-t border-border pt-2">
               <span className="font-medium">Buchungsnr.:</span> {confirmationNumber}
             </p>
           )}

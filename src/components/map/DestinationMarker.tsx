@@ -91,9 +91,9 @@ export function DestinationMarker({
     >
       <Popup>
         <div className="min-w-[200px]">
-          <h3 className="font-semibold text-lg text-gray-900">{name}</h3>
-          <p className="text-sm text-gray-600 mb-2">{country}</p>
-          <div className="text-xs text-gray-500 space-y-1">
+          <h3 className="font-semibold text-lg text-foreground">{name}</h3>
+          <p className="text-sm text-muted-foreground mb-2">{country}</p>
+          <div className="text-xs text-muted-foreground space-y-1">
             <p>
               <span className="font-medium">Ankunft:</span> {formatDate(arrivalDate)}
             </p>
@@ -102,7 +102,7 @@ export function DestinationMarker({
             </p>
           </div>
           {destination.notes && (
-            <p className="mt-2 text-xs text-gray-600 border-t pt-2">
+            <p className="mt-2 text-xs text-muted-foreground border-t border-border pt-2">
               {destination.notes}
             </p>
           )}

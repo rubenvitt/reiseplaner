@@ -114,7 +114,7 @@ export function PackingCategory({
             className={cn(
               'h-full rounded-full transition-all duration-300',
               progressPercentage === 100
-                ? 'bg-green-500'
+                ? 'bg-green-500 dark:bg-green-600'
                 : progressPercentage > 0
                   ? 'bg-primary'
                   : 'bg-muted'

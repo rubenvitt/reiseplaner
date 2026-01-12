@@ -11,7 +11,7 @@ export function PackingPage() {
   if (!trip) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center text-gray-500">
+        <div className="text-center text-muted-foreground">
           <p>Reise nicht gefunden.</p>
           <Link to="/" className="text-primary hover:underline">
             Zurück zur Übersicht

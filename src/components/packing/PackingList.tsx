@@ -164,9 +164,9 @@ export function PackingList({ tripId }: PackingListProps) {
 
   // Render Fortschritts-Farbe
   const getProgressColor = (percentage: number) => {
-    if (percentage === 100) return 'bg-green-500'
-    if (percentage >= 75) return 'bg-yellow-500'
-    if (percentage >= 50) return 'bg-orange-500'
+    if (percentage === 100) return 'bg-green-500 dark:bg-green-600'
+    if (percentage >= 75) return 'bg-yellow-500 dark:bg-yellow-600'
+    if (percentage >= 50) return 'bg-orange-500 dark:bg-orange-600'
     return 'bg-primary'
   }
 
@@ -198,7 +198,7 @@ export function PackingList({ tripId }: PackingListProps) {
             </span>
           </div>
           {progress.percentage === 100 && progress.total > 0 && (
-            <span className="text-sm text-green-600 font-medium">
+            <span className="text-sm text-green-600 dark:text-green-400 font-medium">
               Alles gepackt!
             </span>
           )}

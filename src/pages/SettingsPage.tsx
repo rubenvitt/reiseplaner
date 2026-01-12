@@ -133,12 +133,12 @@ export function SettingsPage() {
               {/* Delete all data */}
               <div className="space-y-3">
                 <h3 className="text-sm font-medium text-foreground">Gefahrenzone</h3>
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg space-y-3">
+                <div className="p-4 bg-destructive/10 border border-destructive/30 rounded-lg space-y-3">
                   <div className="flex items-start gap-3">
-                    <Trash2 className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                    <Trash2 className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-medium text-red-900">Alle Daten löschen</p>
-                      <p className="text-sm text-red-700 mt-1">
+                      <p className="font-medium text-destructive">Alle Daten löschen</p>
+                      <p className="text-sm text-destructive/80 mt-1">
                         Diese Aktion löscht alle Reisen, Unterkünfte, Ausgaben und Packlisten
                         unwiderruflich. Erstelle vorher ein Backup, wenn du deine Daten behalten
                         möchtest.
@@ -217,8 +217,8 @@ export function SettingsPage() {
           </DialogHeader>
 
           <div className="space-y-4 py-4">
-            <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
-              <p className="text-sm text-amber-800">
+            <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+              <p className="text-sm text-amber-700 dark:text-amber-400">
                 Gib <span className="font-mono font-bold">LOESCHEN</span> ein, um zu
                 bestätigen.
               </p>

@@ -8,7 +8,7 @@ export function AppLayout() {
   const location = useLocation()
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Desktop Layout */}
       <div className="hidden lg:flex">
         {/* Sidebar - Fixed on left */}
