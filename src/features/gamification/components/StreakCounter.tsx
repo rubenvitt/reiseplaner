@@ -156,7 +156,7 @@ export function StreakCounter({
         >
           <div className="flex items-center gap-2">
             <Trophy className="w-4 h-4 text-amber-500" />
-            <span>Laengste Streak: <strong>{longestStreak} Tage</strong></span>
+            <span>Längste Streak: <strong>{longestStreak} Tage</strong></span>
           </div>
         </div>
       )}

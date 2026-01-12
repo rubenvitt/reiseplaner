@@ -38,7 +38,7 @@ interface SortableActivityProps {
 }
 
 // Zoom levels: hours per pixel ratio
-const ZOOM_LEVELS = [0.5, 1, 2, 4] // 0.5 = sehr gezoomt, 4 = uebersichtlich
+const ZOOM_LEVELS = [0.5, 1, 2, 4] // 0.5 = sehr gezoomt, 4 = übersichtlich
 
 function SortableActivity({ activity, zoomLevel, onActivityClick }: SortableActivityProps) {
   const {
@@ -134,7 +134,7 @@ export function TimelineView({
     }) || []
   }, [dayPlan])
 
-  // Stunden fuer die Timeline (0-23)
+  // Stunden für die Timeline (0-23)
   const hours = useMemo(() => {
     return Array.from({ length: 24 }, (_, i) => i)
   }, [])
@@ -206,7 +206,7 @@ export function TimelineView({
             size="icon"
             onClick={handleZoomIn}
             disabled={zoomIndex === 0}
-            aria-label="Vergroessern"
+            aria-label="Vergrößern"
           >
             <ZoomIn className="h-4 w-4" />
           </Button>
@@ -274,7 +274,7 @@ export function TimelineView({
               </motion.div>
             )}
 
-            {/* Aktivitaeten */}
+            {/* Aktivitäten */}
             <div className="relative h-[120px]">
               <SortableContext
                 items={activities.map((a) => a.id)}
@@ -313,10 +313,10 @@ export function TimelineView({
           <div key={category} className="flex items-center gap-1.5">
             <span className={cn('w-3 h-3 rounded', colors.dot)} />
             <span className="text-xs text-muted-foreground capitalize">
-              {category === 'sightseeing' ? 'Sehenswuerdigkeit' :
+              {category === 'sightseeing' ? 'Sehenswürdigkeit' :
                category === 'food' ? 'Essen' :
                category === 'transport' ? 'Transport' :
-               category === 'activity' ? 'Aktivitaet' :
+               category === 'activity' ? 'Aktivität' :
                category === 'relaxation' ? 'Entspannung' :
                category === 'shopping' ? 'Shopping' : 'Sonstiges'}
             </span>
@@ -324,16 +324,16 @@ export function TimelineView({
         ))}
       </div>
 
-      {/* Hinweis wenn keine Aktivitaeten */}
+      {/* Hinweis wenn keine Aktivitäten */}
       {activities.length === 0 && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center py-8 text-muted-foreground"
         >
-          <p>Keine Aktivitaeten fuer diesen Tag geplant.</p>
+          <p>Keine Aktivitäten für diesen Tag geplant.</p>
           <p className="text-sm mt-1">
-            Wechsle zur Itinerary-Ansicht, um Aktivitaeten hinzuzufuegen.
+            Wechsle zur Itinerary-Ansicht, um Aktivitäten hinzuzufügen.
           </p>
         </motion.div>
       )}

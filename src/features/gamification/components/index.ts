@@ -1,7 +1,7 @@
 /**
  * Gamification Components
  *
- * Barrel export fuer alle Gamification UI-Komponenten
+ * Barrel export für alle Gamification UI-Komponenten
  */
 
 export { AchievementBadge } from './AchievementBadge'

@@ -109,7 +109,7 @@ export function TourTooltip({
           size="icon"
           className="h-6 w-6 shrink-0"
           onClick={onSkip}
-          aria-label="Tour ueberspringen"
+          aria-label="Tour überspringen"
         >
           <X className="h-4 w-4" />
         </Button>
@@ -140,7 +140,7 @@ export function TourTooltip({
           onClick={onSkip}
           className="text-muted-foreground"
         >
-          Ueberspringen
+          Überspringen
         </Button>
         <div className="flex gap-2">
           {canGoBack && (
@@ -150,7 +150,7 @@ export function TourTooltip({
               onClick={onPrev}
             >
               <ChevronLeft className="mr-1 h-4 w-4" />
-              Zurueck
+              Zurück
             </Button>
           )}
           <Button size="sm" onClick={onNext}>

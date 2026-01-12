@@ -59,7 +59,7 @@ export function OnboardingProvider({
   children,
   defaultTour = 'dashboard',
 }: OnboardingProviderProps) {
-  // UI Store fuer Persistenz
+  // UI Store für Persistenz
   const isFirstVisit = useUIStore((state) => state.isFirstVisit)
   const setFirstVisit = useUIStore((state) => state.setFirstVisit)
 
@@ -77,7 +77,7 @@ export function OnboardingProvider({
   // Zeige Welcome Screen beim ersten Besuch
   React.useEffect(() => {
     if (isFirstVisit) {
-      // Kurze Verzoegerung damit die App erst rendert
+      // Kurze Verzögerung damit die App erst rendert
       const timer = setTimeout(() => {
         setIsWelcomeOpen(true)
       }, 500)
@@ -93,7 +93,7 @@ export function OnboardingProvider({
     setIsTourActive(true)
   }, [defaultTour])
 
-  // Naechster Schritt
+  // Nächster Schritt
   const nextStep = React.useCallback(() => {
     if (currentStepIndex < currentTourSteps.length - 1) {
       setCurrentStepIndex((prev) => prev + 1)
@@ -113,7 +113,7 @@ export function OnboardingProvider({
     }
   }, [currentStepIndex])
 
-  // Tour ueberspringen
+  // Tour überspringen
   const skipTour = React.useCallback(() => {
     setIsTourActive(false)
     setIsWelcomeOpen(false)
@@ -129,7 +129,7 @@ export function OnboardingProvider({
     }
   }, [currentTourSteps.length])
 
-  // Welcome Screen oeffnen/schliessen
+  // Welcome Screen öffnen/schließen
   const openWelcome = React.useCallback(() => {
     setIsWelcomeOpen(true)
   }, [])

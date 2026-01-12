@@ -202,8 +202,8 @@ export function WelcomeScreen({
               transition={{ delay: 0.5, duration: 0.3 }}
             >
               {[
-                { icon: Calendar, text: 'Reisen und Aktivitaeten planen' },
-                { icon: MapPin, text: 'Unterkuenfte und Transport verwalten' },
+                { icon: Calendar, text: 'Reisen und Aktivitäten planen' },
+                { icon: MapPin, text: 'Unterkünfte und Transport verwalten' },
                 { icon: Compass, text: 'Packlisten und Budget im Blick' },
               ].map((feature, index) => (
                 <motion.li
@@ -233,7 +233,7 @@ export function WelcomeScreen({
                 onClick={onSkip}
                 className="order-2 sm:order-1"
               >
-                Spaeter
+                Später
               </Button>
               <Button
                 onClick={onStartTour}

@@ -2,11 +2,11 @@
  * Onboarding System Exports
  *
  * Dieses Modul stellt das komplette Onboarding-System bereit:
- * - OnboardingProvider: Context Provider fuer die gesamte App
+ * - OnboardingProvider: Context Provider für die gesamte App
  * - useOnboarding: Hook zum Zugriff auf Onboarding-Funktionen
  * - WelcomeScreen: Modal beim ersten Besuch
- * - TourOverlay: Spotlight-Overlay fuer die Tour
- * - TourTooltip: Tooltip-Komponente fuer Tour-Schritte
+ * - TourOverlay: Spotlight-Overlay für die Tour
+ * - TourTooltip: Tooltip-Komponente für Tour-Schritte
  */
 
 export { OnboardingProvider, useOnboarding } from './OnboardingProvider'

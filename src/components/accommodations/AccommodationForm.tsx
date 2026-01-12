@@ -96,7 +96,7 @@ export function AccommodationForm({
     let latitude = accommodation?.latitude
     let longitude = accommodation?.longitude
 
-    // Geocode wenn Adresse sich geaendert hat oder noch keine Koordinaten vorhanden sind
+    // Geocode wenn Adresse sich geändert hat oder noch keine Koordinaten vorhanden sind
     const addressChanged = data.address !== accommodation?.address
     const needsGeocoding = !latitude || !longitude || addressChanged
 

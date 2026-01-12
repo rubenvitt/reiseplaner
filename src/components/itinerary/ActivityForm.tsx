@@ -69,7 +69,7 @@ export function ActivityForm({ activity, onSubmit, onCancel }: ActivityFormProps
     let latitude = activity?.latitude
     let longitude = activity?.longitude
 
-    // Geocode wenn Location sich geaendert hat oder noch keine Koordinaten vorhanden sind
+    // Geocode wenn Location sich geändert hat oder noch keine Koordinaten vorhanden sind
     const locationChanged = data.location !== activity?.location
     const needsGeocoding = (!latitude || !longitude || locationChanged) && data.location
 

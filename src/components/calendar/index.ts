@@ -1,4 +1,4 @@
-// Kalender-Komponenten fuer die Itinerary-Ansicht
+// Kalender-Komponenten für die Itinerary-Ansicht
 
 export { CalendarView } from './CalendarView'
 export { CalendarHeader, type ViewMode } from './CalendarHeader'

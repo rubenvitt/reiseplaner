@@ -73,7 +73,7 @@ export function MapControls({
   const layers: { id: LayerType; label: string; icon: typeof MapIcon }[] = [
     { id: 'standard', label: 'Standard', icon: MapIcon },
     { id: 'satellite', label: 'Satellit', icon: Satellite },
-    { id: 'terrain', label: 'Gelaende', icon: Mountain },
+    { id: 'terrain', label: 'Gelände', icon: Mountain },
   ]
 
   return (
@@ -121,8 +121,8 @@ export function MapControls({
       <button
         onClick={handleResetView}
         className="p-2 bg-card rounded-lg shadow-lg border border-border hover:bg-accent transition-colors"
-        title="Ansicht zuruecksetzen"
-        aria-label="Ansicht zuruecksetzen"
+        title="Ansicht zurücksetzen"
+        aria-label="Ansicht zurücksetzen"
       >
         <RotateCcw className="w-5 h-5 text-foreground" />
       </button>

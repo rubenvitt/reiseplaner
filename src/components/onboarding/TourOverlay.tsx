@@ -63,7 +63,7 @@ export function TourOverlay({
         height: rect.height + PADDING * 2,
       })
 
-      // Scrolle Element in den sichtbaren Bereich wenn noetig
+      // Scrolle Element in den sichtbaren Bereich wenn nötig
       const isInViewport =
         rect.top >= 0 &&
         rect.left >= 0 &&
@@ -97,7 +97,7 @@ export function TourOverlay({
     if (!targetRect || !currentStep) return
 
     const TOOLTIP_WIDTH = 320 // Breite des Tooltips (w-80)
-    const TOOLTIP_HEIGHT = 220 // Geschaetzte Hoehe des Tooltips
+    const TOOLTIP_HEIGHT = 220 // Geschätzte Höhe des Tooltips
 
     let top = 0
     let left = 0
@@ -141,17 +141,17 @@ export function TourOverlay({
 
   if (!mounted) return null
 
-  // Erstelle den SVG-Pfad fuer das Spotlight (Loch im Overlay)
+  // Erstelle den SVG-Pfad für das Spotlight (Loch im Overlay)
   const createSpotlightPath = () => {
     if (!targetRect) return ''
 
     const { top, left, width, height } = targetRect
-    const radius = 8 // Border-Radius fuer das Spotlight
+    const radius = 8 // Border-Radius für das Spotlight
 
-    // Aeusserer Pfad (voller Bildschirm)
+    // Äußerer Pfad (voller Bildschirm)
     const outer = `M 0 0 L ${window.innerWidth} 0 L ${window.innerWidth} ${window.innerHeight} L 0 ${window.innerHeight} Z`
 
-    // Innerer Pfad (abgerundetes Rechteck - gegen den Uhrzeigersinn fuer das Loch)
+    // Innerer Pfad (abgerundetes Rechteck - gegen den Uhrzeigersinn für das Loch)
     const inner = `
       M ${left + radius} ${top}
       L ${left + width - radius} ${top}
@@ -207,11 +207,11 @@ export function TourOverlay({
             )}
           </motion.svg>
 
-          {/* Click-Handler fuer das Overlay (zum Schliessen) */}
+          {/* Click-Handler für das Overlay (zum Schließen) */}
           <div
             className="fixed inset-0 cursor-pointer"
             onClick={(e) => {
-              // Nur schliessen wenn direkt auf das Overlay geklickt wird
+              // Nur schließen wenn direkt auf das Overlay geklickt wird
               if (e.target === e.currentTarget) {
                 onSkip()
               }

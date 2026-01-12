@@ -100,7 +100,7 @@ export function CalendarView({
     onDayClick?.(date)
   }, [viewMode, onDayClick])
 
-  // Animationsvarianten fuer View-Wechsel
+  // Animationsvarianten für View-Wechsel
   const viewVariants = {
     initial: { opacity: 0, x: 20 },
     animate: { opacity: 1, x: 0 },

@@ -1,7 +1,7 @@
 /**
  * Gamification Types
  *
- * Type-Definitionen fuer das Gamification-System
+ * Type-Definitionen für das Gamification-System
  */
 
 export type AchievementRarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary'

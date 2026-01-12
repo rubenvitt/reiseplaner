@@ -59,7 +59,7 @@ export function ProfilePage() {
           animate="animate"
           className="space-y-6"
         >
-          {/* Statistik-Uebersicht */}
+          {/* Statistik-Übersicht */}
           <motion.div variants={staggerItem}>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Gesamtpunkte */}
@@ -162,7 +162,7 @@ export function ProfilePage() {
                 </CardContent>
               </Card>
 
-              {/* Laengste Streak */}
+              {/* Längste Streak */}
               <Card className="overflow-hidden">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
@@ -177,7 +177,7 @@ export function ProfilePage() {
                       <Trophy className="w-5 h-5 text-purple-500" />
                     </motion.div>
                     <div>
-                      <p className="text-xs text-muted-foreground">Laengste Streak</p>
+                      <p className="text-xs text-muted-foreground">Längste Streak</p>
                       <p className="text-xl font-bold text-foreground">
                         {longestStreak} {longestStreak === 1 ? 'Tag' : 'Tage'}
                       </p>
@@ -228,7 +228,7 @@ export function ProfilePage() {
 
                   {nextLevel && (
                     <div className="text-right">
-                      <p className="text-sm font-medium text-muted-foreground">Naechstes Level</p>
+                      <p className="text-sm font-medium text-muted-foreground">Nächstes Level</p>
                       <p className="text-sm font-semibold">{nextLevel.title}</p>
                     </div>
                   )}
@@ -285,7 +285,7 @@ export function ProfilePage() {
             </Card>
           </motion.div>
 
-          {/* Streak Counter (vollstaendige Ansicht) */}
+          {/* Streak Counter (vollständige Ansicht) */}
           <motion.div variants={staggerItem}>
             <StreakCounter showLongest={true} />
           </motion.div>

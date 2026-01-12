@@ -26,10 +26,10 @@ const categoryIcons: Record<string, string> = {
 
 // Category translations
 const categoryLabels: Record<ActivityCategory, string> = {
-  sightseeing: 'Sehenswuerdigkeit',
+  sightseeing: 'Sehenswürdigkeit',
   food: 'Essen & Trinken',
   transport: 'Transport',
-  activity: 'Aktivitaet',
+  activity: 'Aktivität',
   relaxation: 'Erholung',
   shopping: 'Shopping',
   other: 'Sonstiges',

@@ -54,7 +54,7 @@ export const achievements: Achievement[] = [
   {
     id: 'world_traveler',
     title: 'Weltreisender',
-    description: 'Besuche 10 verschiedene Laender',
+    description: 'Besuche 10 verschiedene Länder',
     icon: 'Earth',
     category: 'exploration',
     points: 1000,
@@ -108,7 +108,7 @@ export const achievements: Achievement[] = [
   {
     id: 'packing_pro',
     title: 'Pack-Profi',
-    description: 'Vervollstaendige 5 Packlisten',
+    description: 'Vervollständige 5 Packlisten',
     icon: 'CheckSquare',
     category: 'planning',
     points: 300,
@@ -117,8 +117,8 @@ export const achievements: Achievement[] = [
   },
   {
     id: 'activity_king',
-    title: 'Aktivitaeten-Koenig',
-    description: 'Plane 50 Aktivitaeten',
+    title: 'Aktivitäten-König',
+    description: 'Plane 50 Aktivitäten',
     icon: 'ListTodo',
     category: 'planning',
     points: 300,
@@ -128,7 +128,7 @@ export const achievements: Achievement[] = [
   {
     id: 'detail_oriented',
     title: 'Detailverliebt',
-    description: 'Plane 100 Aktivitaeten',
+    description: 'Plane 100 Aktivitäten',
     icon: 'ClipboardList',
     category: 'planning',
     points: 600,
@@ -170,7 +170,7 @@ export const achievements: Achievement[] = [
   {
     id: 'hotel_hopper',
     title: 'Hotel-Hopper',
-    description: 'Buche 10 Unterkuenfte',
+    description: 'Buche 10 Unterkünfte',
     icon: 'Building2',
     category: 'planning',
     points: 350,
@@ -200,9 +200,9 @@ export const rarityColors: Record<AchievementRarity, string> = {
 }
 
 export const rarityLabels: Record<AchievementRarity, string> = {
-  common: 'Gewoehnlich',
-  uncommon: 'Ungewoehnlich',
+  common: 'Gewöhnlich',
+  uncommon: 'Ungewöhnlich',
   rare: 'Selten',
   epic: 'Episch',
-  legendary: 'Legendaer'
+  legendary: 'Legendär'
 }

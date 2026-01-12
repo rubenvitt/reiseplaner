@@ -76,10 +76,10 @@ const categoryColors: Record<ActivityCategory, { bg: string; text: string; borde
 }
 
 const categoryLabels: Record<ActivityCategory, string> = {
-  sightseeing: 'Sehenswuerdigkeit',
+  sightseeing: 'Sehenswürdigkeit',
   food: 'Essen',
   transport: 'Transport',
-  activity: 'Aktivitaet',
+  activity: 'Aktivität',
   relaxation: 'Entspannung',
   shopping: 'Shopping',
   other: 'Sonstiges',
@@ -96,7 +96,7 @@ export function CalendarEvent({
 
   const formatTime = (time: string) => time.slice(0, 5)
 
-  // Kompakte Ansicht (fuer Monat)
+  // Kompakte Ansicht (für Monat)
   if (variant === 'compact') {
     return (
       <motion.div
@@ -147,7 +147,7 @@ export function CalendarEvent({
     )
   }
 
-  // Vollstaendige Ansicht (fuer Woche)
+  // Vollständige Ansicht (für Woche)
   if (variant === 'full') {
     return (
       <motion.div
@@ -224,7 +224,7 @@ export function CalendarEvent({
   )
 }
 
-// Export helper fuer Kategorie-Punkt (z.B. fuer MonthView)
+// Export helper für Kategorie-Punkt (z.B. für MonthView)
 export function CategoryDot({ category }: { category: ActivityCategory }) {
   const colors = categoryColors[category]
   return (

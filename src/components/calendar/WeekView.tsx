@@ -64,7 +64,7 @@ export function WeekView({
 
   const today = new Date()
 
-  // Aktivitaeten nach Stunde gruppieren
+  // Aktivitäten nach Stunde gruppieren
   const getActivityPosition = (activity: Activity) => {
     if (!activity.startTime) return null
     const [hours, minutes] = activity.startTime.split(':').map(Number)
@@ -135,7 +135,7 @@ export function WeekView({
 
                 {activities.length === 0 && (
                   <p className="text-xs text-muted-foreground text-center py-4">
-                    Keine Aktivitaeten
+                    Keine Aktivitäten
                   </p>
                 )}
               </motion.div>
@@ -195,7 +195,7 @@ export function WeekView({
                 </div>
               </div>
 
-              {/* Stunden-Raster mit Aktivitaeten */}
+              {/* Stunden-Raster mit Aktivitäten */}
               <div className="relative border-l border-border">
                 {/* Stunden-Linien */}
                 {HOURS.map((hour) => (
@@ -205,12 +205,12 @@ export function WeekView({
                   />
                 ))}
 
-                {/* Aktivitaeten */}
+                {/* Aktivitäten */}
                 {activities.map((activity) => {
                   const position = getActivityPosition(activity)
 
                   if (!position) {
-                    // Aktivitaet ohne Zeitangabe am Anfang anzeigen
+                    // Aktivität ohne Zeitangabe am Anfang anzeigen
                     return (
                       <div
                         key={activity.id}

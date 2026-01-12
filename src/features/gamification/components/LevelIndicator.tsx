@@ -88,7 +88,7 @@ export function LevelIndicator({
         <div className="flex justify-between text-xs text-muted-foreground">
           <span>{totalPoints} Punkte</span>
           {!isMaxLevel && nextLevel && (
-            <span>{nextLevel.minPoints} Punkte fuer Lvl {nextLevel.level}</span>
+            <span>{nextLevel.minPoints} Punkte für Lvl {nextLevel.level}</span>
           )}
         </div>
 
@@ -117,7 +117,7 @@ export function LevelIndicator({
 
         {!isMaxLevel && (
           <div className="text-xs text-muted-foreground text-center">
-            {progress.current} / {progress.required} Punkte zum naechsten Level
+            {progress.current} / {progress.required} Punkte zum nächsten Level
           </div>
         )}
       </div>

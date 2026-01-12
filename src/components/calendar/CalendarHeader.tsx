@@ -56,7 +56,7 @@ export function CalendarHeader({
             variant="outline"
             size="icon"
             onClick={onPrevious}
-            aria-label="Zurueck"
+            aria-label="Zurück"
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>

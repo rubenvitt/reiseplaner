@@ -16,7 +16,7 @@ export interface TourStep {
 }
 
 /**
- * Tour-Schritte fuer das Dashboard
+ * Tour-Schritte für das Dashboard
  */
 export const dashboardTour: TourStep[] = [
   {
@@ -57,13 +57,13 @@ export const dashboardTour: TourStep[] = [
 ]
 
 /**
- * Tour-Schritte fuer die Reise-Detail-Seite
+ * Tour-Schritte für die Reise-Detail-Seite
  */
 export const tripDetailTour: TourStep[] = [
   {
     id: 'trip-overview',
     target: '[data-tour="trip-overview"]',
-    title: 'Reiseuebersicht',
+    title: 'Reiseübersicht',
     content: 'Hier findest du alle wichtigen Informationen zu deiner Reise zusammengefasst.',
     placement: 'bottom',
   },
@@ -71,7 +71,7 @@ export const tripDetailTour: TourStep[] = [
     id: 'itinerary',
     target: '[data-tour="itinerary"]',
     title: 'Tagesplanung',
-    content: 'Plane deine Aktivitaeten Tag fuer Tag und behalte den Ueberblick ueber dein Programm.',
+    content: 'Plane deine Aktivitäten Tag für Tag und behalte den Überblick über dein Programm.',
     placement: 'bottom',
   },
   {
@@ -85,13 +85,13 @@ export const tripDetailTour: TourStep[] = [
     id: 'packing',
     target: '[data-tour="packing"]',
     title: 'Packliste',
-    content: 'Erstelle deine persoenliche Packliste und vergiss nie wieder etwas Wichtiges.',
+    content: 'Erstelle deine persönliche Packliste und vergiss nie wieder etwas Wichtiges.',
     placement: 'bottom',
   },
 ]
 
 /**
- * Alle verfuegbaren Touren
+ * Alle verfügbaren Touren
  */
 export const tours = {
   dashboard: dashboardTour,

@@ -170,7 +170,7 @@ export function MonthView({
                   onClick={() => setSelectedDay(null)}
                   className="text-sm text-muted-foreground hover:text-foreground"
                 >
-                  Schliessen
+                  Schließen
                 </button>
               </div>
 
@@ -186,7 +186,7 @@ export function MonthView({
                 </div>
               ) : (
                 <p className="text-sm text-muted-foreground py-4 text-center">
-                  Keine Aktivitaeten fuer diesen Tag geplant.
+                  Keine Aktivitäten für diesen Tag geplant.
                 </p>
               )}
             </div>

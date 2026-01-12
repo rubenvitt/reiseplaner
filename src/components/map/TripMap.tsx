@@ -227,11 +227,11 @@ export function TripMap({
           </div>
           <div className="flex items-center gap-2 text-xs">
             <div className="w-4 h-4 rounded-full bg-purple-500 border-2 border-card shadow" />
-            <span className="text-muted-foreground">Unterkuenfte</span>
+            <span className="text-muted-foreground">Unterkünfte</span>
           </div>
           <div className="flex items-center gap-2 text-xs">
             <div className="w-4 h-4 rounded-full bg-amber-500 border-2 border-card shadow" />
-            <span className="text-muted-foreground">Aktivitaeten</span>
+            <span className="text-muted-foreground">Aktivitäten</span>
           </div>
         </div>
       </div>

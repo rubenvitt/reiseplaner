@@ -55,7 +55,7 @@ export function DestinationForm({
     let latitude = destination?.latitude
     let longitude = destination?.longitude
 
-    // Geocode wenn Name oder Land sich geaendert haben oder noch keine Koordinaten vorhanden sind
+    // Geocode wenn Name oder Land sich geändert haben oder noch keine Koordinaten vorhanden sind
     const nameChanged = data.name !== destination?.name
     const countryChanged = data.country !== destination?.country
     const needsGeocoding = !latitude || !longitude || nameChanged || countryChanged
