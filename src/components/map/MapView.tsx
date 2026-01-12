@@ -1,10 +1,39 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 import Map, { NavigationControl, FullscreenControl, ScaleControl, type ViewState } from 'react-map-gl/mapbox'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { getMapboxToken } from '@/lib/geocoding'
 import { useThemeStore } from '@/stores/themeStore'
 import { MapMarker } from './MapMarker'
+import { StackedMapMarker } from './StackedMapMarker'
 import type { MapLocation } from '@/hooks/useMapLocations'
+
+interface LocationGroup {
+  key: string
+  coordinates: { latitude: number; longitude: number }
+  locations: MapLocation[]
+}
+
+function groupLocationsByCoordinates(locations: MapLocation[]): LocationGroup[] {
+  const groups = new globalThis.Map<string, LocationGroup>()
+
+  for (const loc of locations) {
+    if (!loc.coordinates) continue
+    // Key aus gerundeten Koordinaten (6 Dezimalstellen = ~10cm Genauigkeit)
+    const key = `${loc.coordinates.latitude.toFixed(6)},${loc.coordinates.longitude.toFixed(6)}`
+    const existing = groups.get(key)
+    if (existing) {
+      existing.locations.push(loc)
+    } else {
+      groups.set(key, {
+        key,
+        coordinates: loc.coordinates,
+        locations: [loc],
+      })
+    }
+  }
+
+  return Array.from(groups.values())
+}
 
 interface MapViewProps {
   locations: MapLocation[]
@@ -77,6 +106,18 @@ export function MapView({ locations, bounds, onLocationClick, className = '' }: 
     }
   }, [onLocationClick])
 
+  // Filter locations with coordinates
+  const locationsWithCoords = useMemo(
+    () => locations.filter((loc) => loc.coordinates),
+    [locations]
+  )
+
+  // Group locations by coordinates to handle overlapping markers
+  const locationGroups = useMemo(
+    () => groupLocationsByCoordinates(locationsWithCoords),
+    [locationsWithCoords]
+  )
+
   if (!mapboxToken) {
     return (
       <div className={`bg-card rounded-lg border border-border p-6 ${className}`}>
@@ -113,8 +154,6 @@ export function MapView({ locations, bounds, onLocationClick, className = '' }: 
       </div>
     )
   }
-
-  const locationsWithCoords = locations.filter((loc) => loc.coordinates)
 
   if (locationsWithCoords.length === 0) {
     return (
@@ -164,14 +203,24 @@ export function MapView({ locations, bounds, onLocationClick, className = '' }: 
         <FullscreenControl position="top-right" />
         <ScaleControl position="bottom-left" />
 
-        {locationsWithCoords.map((location) => (
-          <MapMarker
-            key={location.id}
-            location={location}
-            isSelected={selectedLocation?.id === location.id}
-            onClick={() => handleMarkerClick(location)}
-          />
-        ))}
+        {locationGroups.map((group) =>
+          group.locations.length === 1 ? (
+            <MapMarker
+              key={group.key}
+              location={group.locations[0]}
+              isSelected={selectedLocation?.id === group.locations[0].id}
+              onClick={() => handleMarkerClick(group.locations[0])}
+            />
+          ) : (
+            <StackedMapMarker
+              key={group.key}
+              locations={group.locations}
+              coordinates={group.coordinates}
+              isSelected={group.locations.some((loc) => selectedLocation?.id === loc.id)}
+              onClick={handleMarkerClick}
+            />
+          )
+        )}
       </Map>
     </div>
   )
