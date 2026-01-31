@@ -1,12 +1,19 @@
 import { useForm } from 'react-hook-form'
 import { Button, Input } from '@/components/ui'
-import type { Trip } from '@/types'
+import type { Trip, TripStatus } from '@/types'
 
 const CURRENCIES = [
   { value: 'EUR', label: 'EUR (Euro)' },
   { value: 'USD', label: 'USD (US Dollar)' },
   { value: 'GBP', label: 'GBP (British Pound)' },
   { value: 'CHF', label: 'CHF (Swiss Franc)' },
+] as const
+
+const STATUS_OPTIONS = [
+  { value: 'planning', label: 'Planung' },
+  { value: 'upcoming', label: 'Bevorstehend' },
+  { value: 'ongoing', label: 'Aktiv' },
+  { value: 'completed', label: 'Abgeschlossen' },
 ] as const
 
 export interface TripFormData {
@@ -16,6 +23,7 @@ export interface TripFormData {
   endDate?: string
   currency: string
   totalBudget: number
+  status?: TripStatus
 }
 
 interface TripFormProps {
@@ -40,6 +48,7 @@ export function TripForm({ trip, onSubmit, onCancel }: TripFormProps) {
       endDate: trip?.endDate ?? '',
       currency: trip?.currency ?? 'EUR',
       totalBudget: trip?.totalBudget ?? 0,
+      status: trip?.status ?? 'planning',
     },
   })
 
@@ -158,6 +167,26 @@ export function TripForm({ trip, onSubmit, onCancel }: TripFormProps) {
           )}
         </div>
       </div>
+
+      {/* Status (only in edit mode) */}
+      {isEditMode && (
+        <div className="space-y-2">
+          <label htmlFor="status" className="text-sm font-medium">
+            Status
+          </label>
+          <select
+            id="status"
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            {...register('status')}
+          >
+            {STATUS_OPTIONS.map((status) => (
+              <option key={status.value} value={status.value}>
+                {status.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div className="flex justify-end gap-3 pt-4">
         <Button type="button" variant="outline" onClick={onCancel}>
