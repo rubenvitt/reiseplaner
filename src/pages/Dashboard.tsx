@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { useTripStore } from '@/stores'
 import { TripCard, TripForm, type TripFormData } from '@/components/trips'
+import type { Trip } from '@/types'
 import {
   Button,
   Dialog,
@@ -13,10 +14,12 @@ import { StaggerList, StaggerItem, FadeIn } from '@/components/ui/motion'
 
 export function Dashboard() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [editingTrip, setEditingTrip] = useState<Trip | null>(null)
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
 
   const trips = useTripStore((state) => state.trips)
   const addTrip = useTripStore((state) => state.addTrip)
+  const updateTrip = useTripStore((state) => state.updateTrip)
   const deleteTrip = useTripStore((state) => state.deleteTrip)
 
   const handleCreateTrip = (data: TripFormData) => {
@@ -25,6 +28,12 @@ export function Dashboard() {
       status: 'planning',
     })
     setIsCreateDialogOpen(false)
+  }
+
+  const handleEditTrip = (data: TripFormData) => {
+    if (!editingTrip) return
+    updateTrip(editingTrip.id, data)
+    setEditingTrip(null)
   }
 
   const handleDeleteTrip = () => {
@@ -78,6 +87,7 @@ export function Dashboard() {
             >
               <TripCard
                 trip={trip}
+                onEdit={() => setEditingTrip(trip)}
                 onDelete={() => setDeleteConfirmId(trip.id)}
               />
             </StaggerItem>
@@ -95,6 +105,25 @@ export function Dashboard() {
             onSubmit={handleCreateTrip}
             onCancel={() => setIsCreateDialogOpen(false)}
           />
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Trip Dialog */}
+      <Dialog
+        open={editingTrip !== null}
+        onOpenChange={(open) => !open && setEditingTrip(null)}
+      >
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Reise bearbeiten</DialogTitle>
+          </DialogHeader>
+          {editingTrip && (
+            <TripForm
+              trip={editingTrip}
+              onSubmit={handleEditTrip}
+              onCancel={() => setEditingTrip(null)}
+            />
+          )}
         </DialogContent>
       </Dialog>
 
