@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Plus, MapPin } from 'lucide-react'
+import { Plus, MapPin, Pencil } from 'lucide-react'
 import { useTripStore } from '@/stores'
 import { DestinationCard, DestinationForm } from '@/components/destinations'
 import type { DestinationFormData } from '@/components/destinations'
+import { TripForm, type TripFormData } from '@/components/trips'
 import {
   Dialog,
   DialogContent,
@@ -17,11 +18,13 @@ import type { Destination } from '@/types'
 export function TripOverview() {
   const { tripId } = useParams<{ tripId: string }>()
   const trip = useTripStore((state) => state.getTrip(tripId || ''))
+  const updateTrip = useTripStore((state) => state.updateTrip)
   const addDestination = useTripStore((state) => state.addDestination)
   const updateDestination = useTripStore((state) => state.updateDestination)
   const deleteDestination = useTripStore((state) => state.deleteDestination)
 
   // Dialog states
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [editingDestination, setEditingDestination] = useState<Destination | null>(null)
   const [deletingDestination, setDeletingDestination] = useState<Destination | null>(null)
@@ -61,6 +64,12 @@ export function TripOverview() {
     setEditingDestination(null)
   }
 
+  const handleEditTrip = (data: TripFormData) => {
+    if (!tripId) return
+    updateTrip(tripId, data)
+    setIsEditDialogOpen(false)
+  }
+
   const handleConfirmDelete = () => {
     if (!tripId || !deletingDestination) return
     deleteDestination(tripId, deletingDestination.id)
@@ -73,7 +82,13 @@ export function TripOverview() {
     <div className="space-y-6">
       {/* Trip Info Card */}
       <div className="bg-card rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold text-foreground mb-4">Reiseübersicht</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-foreground">Reiseübersicht</h2>
+          <Button variant="ghost" size="sm" onClick={() => setIsEditDialogOpen(true)}>
+            <Pencil className="mr-2 h-4 w-4" />
+            Basisdaten bearbeiten
+          </Button>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -130,6 +145,20 @@ export function TripOverview() {
           </div>
         )}
       </div>
+
+      {/* Edit Trip Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Reise Basisdaten bearbeiten</DialogTitle>
+          </DialogHeader>
+          <TripForm
+            trip={trip}
+            onSubmit={handleEditTrip}
+            onCancel={() => setIsEditDialogOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
 
       {/* Add Dialog */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
