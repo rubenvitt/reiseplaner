@@ -52,13 +52,8 @@ export function Header() {
             </div>
           </div>
 
-          {/* Page Title */}
+          {/* Page Title - Desktop only */}
           <h1 className="hidden lg:block text-lg font-semibold text-foreground">
-            {pageTitle}
-          </h1>
-
-          {/* Mobile: Page Title (centered) */}
-          <h1 className="lg:hidden text-lg font-semibold text-foreground absolute left-1/2 transform -translate-x-1/2">
             {pageTitle}
           </h1>
 
