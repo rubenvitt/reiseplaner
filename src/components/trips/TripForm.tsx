@@ -88,7 +88,7 @@ export function TripForm({ trip, onSubmit, onCancel }: TripFormProps) {
       </div>
 
       {/* Date Range */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="startDate" className="text-sm font-medium">
             Startdatum
@@ -126,7 +126,7 @@ export function TripForm({ trip, onSubmit, onCancel }: TripFormProps) {
       </div>
 
       {/* Currency and Budget */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="currency" className="text-sm font-medium">
             Währung
